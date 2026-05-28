@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1a0f0a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GA RE Exam">
+<title>GA Real Estate Exam — 14-Day Plan</title>
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1a0f0a; --bg2:#2d1810; --bg3:#3d2418; --bg-deep:#150a06;
+    --line:#4a2818; --gold:#d4a574; --gold-dim:#a8825c; --gold-deep:#6b4a30;
+    --rust:#8b3a1f; --rust2:#6b2d18; --copper:#c97e3f;
+    --paper:#f5e6d3; --green:#3f6b4a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{background:var(--bg);color:var(--paper);font-family:'Fraunces',Georgia,serif;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .sans{font-family:'DM Sans',system-ui,sans-serif}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  ul{list-style:none}
+  em{color:var(--gold);font-style:italic}
+
+  /* texture */
+  .grain{position:fixed;inset:0;pointer-events:none;opacity:.035;z-index:1;
+    background-image:radial-gradient(circle at 20% 50%,#fff 1px,transparent 1px),radial-gradient(circle at 80% 80%,#fff 1px,transparent 1px);
+    background-size:38px 38px,58px 58px}
+
+  header{border-bottom:2px solid var(--rust);padding:28px 20px;
+    background:linear-gradient(180deg,#2d1810,#1a0f0a);position:relative;z-index:2}
+  .wrap{max-width:1100px;margin:0 auto}
+  .eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .eyebrow .bar{width:36px;height:2px;background:var(--gold)}
+  .eyebrow span{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+  h1{font-size:clamp(28px,6vw,50px);font-weight:400;letter-spacing:-.02em;line-height:1.08;margin-bottom:8px}
+  .sub{color:var(--gold-dim);font-size:14px;max-width:640px;line-height:1.6}
+
+  .pbar-wrap{margin-top:24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .pbar-outer{flex:1 1 260px;min-width:180px}
+  .pbar-label{display:flex;justify-content:space-between;margin-bottom:6px;font-size:11px;
+    color:var(--gold-dim);letter-spacing:.08em;text-transform:uppercase}
+  .pbar{height:8px;background:var(--bg2);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--copper),var(--gold));
+    border-radius:4px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+  .reset{border:1px solid var(--line);color:var(--gold-dim);padding:8px 13px;font-size:10px;
+    letter-spacing:.1em;text-transform:uppercase}
+  .reset:active{background:var(--bg2)}
+
+  nav{border-bottom:1px solid var(--line);background:rgba(21,10,6,.92);position:sticky;top:0;z-index:20;
+    backdrop-filter:blur(10px)}
+  nav .inner{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none}
+  nav .inner::-webkit-scrollbar{display:none}
+  .tab{padding:15px 16px;font-size:12px;letter-spacing:.04em;color:var(--gold-dim);
+    border-bottom:2px solid transparent;white-space:nowrap;transition:color .2s}
+  .tab.on{color:var(--paper);border-bottom-color:var(--gold)}
+
+  main{max-width:1100px;margin:0 auto;padding:26px 20px 90px;position:relative;z-index:2}
+
+  /* cards / grids */
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:34px}
+  .stat{background:var(--bg2);border:1px solid var(--line);padding:18px}
+  .stat .k{font-size:10px;color:var(--gold-dim);letter-spacing:.18em;text-transform:uppercase;margin-bottom:7px}
+  .stat .v{font-size:28px;color:var(--gold)}
+  .stat .s{font-size:12px;color:var(--gold-dim);margin-top:3px}
+
+  h2{font-size:24px;font-weight:400;margin-bottom:6px}
+  h2 small{color:var(--gold-dim);font-size:13px;letter-spacing:.1em}
+  .lead{color:var(--gold-dim);font-size:14px;line-height:1.6;margin-bottom:22px}
+
+  .bars{background:var(--bg2);border:1px solid var(--line)}
+  .row{display:flex;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);gap:14px}
+  .row:last-child{border-bottom:none}
+  .row .name{flex:0 0 160px;font-size:14px}
+  .row .track{flex:1;position:relative;height:24px;background:var(--bg);overflow:hidden}
+  .row .track i{position:absolute;left:0;top:0;bottom:0;display:block}
+  .row .track b{position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:11px;
+    font-weight:600;color:var(--paper)}
+  .row .pri{flex:0 0 66px;text-align:right;font-size:9px;letter-spacing:.12em}
+  @media(max-width:560px){.row .name{flex:0 0 110px;font-size:13px}.row .pri{display:none}}
+
+  .ga-grid{background:var(--bg2);border:1px solid var(--line);padding:22px;
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:8px}
+  .ga-grid .h{font-size:10px;color:var(--gold);letter-spacing:.18em;margin-bottom:8px}
+  .ga-grid li{color:var(--gold-dim);font-size:14px;line-height:1.85;padding-left:14px;position:relative}
+  .ga-grid li:before{content:'→';position:absolute;left:0;color:var(--gold-deep)}
+
+  /* day selector */
+  .days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:22px}
+  .daybtn{background:var(--bg2);border:1px solid var(--line);padding:9px 3px;text-align:center;position:relative;transition:all .2s}
+  .daybtn.on{background:var(--rust);border-color:var(--gold)}
+  .daybtn.done{background:var(--bg3)}
+  .daybtn .dl{font-size:9px;color:var(--gold-dim);letter-spacing:.08em}
+  .daybtn .dn{font-size:19px;margin-top:1px}
+  .daybtn .chk{position:absolute;top:3px;right:3px;font-size:10px;color:var(--gold)}
+  .daybtn .mini{margin-top:4px;height:3px;background:var(--bg)}
+  .daybtn .mini i{display:block;height:100%;background:var(--gold);transition:width .3s}
+
+  .dhero{background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid var(--line);padding:26px;margin-bottom:20px}
+  .dhero .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .dhero .wk{font-size:11px;color:var(--gold);letter-spacing:.2em;text-transform:uppercase}
+  .dhero h3{font-size:28px;font-weight:400;margin-top:3px}
+  .dhero .focus{color:var(--gold-dim);font-style:italic;font-size:15px;margin-top:7px}
+  .dhero .pct{text-align:right}
+  .dhero .pct .pl{font-size:11px;color:var(--gold-dim);letter-spacing:.1em}
+  .dhero .pct .pv{font-size:26px;color:var(--gold)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-size:11px;background:var(--bg);border:1px solid var(--line);padding:4px 10px;color:var(--gold)}
+
+  .panel{background:var(--bg2);border:1px solid var(--line);margin-bottom:20px}
+  .panel .hd{padding:15px 22px;border-bottom:1px solid var(--line);font-size:11px;color:var(--gold);
+    letter-spacing:.2em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
+  .task{display:flex;align-items:flex-start;gap:13px;padding:15px 22px;border-bottom:1px solid var(--line);
+    width:100%;text-align:left;font-size:15px;line-height:1.5;transition:background .15s}
+  .task:last-child{border-bottom:none}
+  .task:active{background:var(--bg3)}
+  .task .box{flex:0 0 20px;height:20px;border:2px solid var(--gold-deep);border-radius:5px;margin-top:1px;
+    display:flex;align-items:center;justify-content:center;transition:all .2s}
+  .task.done .box{background:var(--gold);border-color:var(--gold)}
+  .task.done .box:after{content:'✓';color:var(--bg);font-size:13px;font-weight:700}
+  .task.done .txt{text-decoration:line-through;opacity:.55}
+
+  /* quiz */
+  .q{margin-bottom:26px}
+  .q:last-child{margin-bottom:0}
+  .q .stem{font-size:15px;margin-bottom:11px;line-height:1.5}
+  .q .stem b{color:var(--gold);margin-right:7px}
+  .opt{display:block;width:100%;text-align:left;padding:11px 14px;margin-bottom:8px;font-size:14px;
+    background:var(--bg);border:1px solid var(--line);transition:all .15s}
+  .opt:active{border-color:var(--gold)}
+  .opt.sel{background:var(--bg3);border-color:var(--gold)}
+  .opt.correct{background:rgba(212,165,116,.16);border-color:var(--gold)}
+  .opt.wrong{background:rgba(139,58,31,.32);border-color:var(--rust)}
+  .opt .ltr{color:var(--gold-dim);margin-right:8px}
+  .explain{margin-top:9px;padding:12px 14px;background:var(--bg);border-left:3px solid var(--gold);
+    font-size:13px;color:var(--gold-dim);line-height:1.6}
+  .explain b{color:var(--gold)}
+  .submit{margin-top:18px;background:var(--rust);border:1px solid var(--gold);color:var(--paper);
+    padding:12px 24px;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+  .submit:disabled{opacity:.4}
+  .score{font-size:14px}
+  .score.pass{color:var(--gold)}.score.fail{color:var(--copper)}
+
+  .dnav{display:flex;gap:10px;margin-top:22px}
+  .dnav button{flex:1;border:1px solid var(--line);color:var(--gold);padding:13px;font-size:12px;
+    letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:7px}
+  .dnav button.next{background:var(--rust);border-color:var(--gold);color:var(--paper)}
+
+  /* flashcards */
+  .fc-topics{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
+  .fc-topic{border:1px solid var(--line);color:var(--gold-dim);padding:7px 13px;font-size:12px;text-transform:capitalize}
+  .fc-topic.on{background:var(--rust);color:var(--paper)}
+  .card{min-height:300px;padding:38px;border:1px solid var(--line);display:flex;flex-direction:column;
+    justify-content:center;align-items:center;text-align:center;position:relative;transition:all .3s;
+    background:linear-gradient(135deg,var(--bg2),var(--bg))}
+  .card.flip{background:linear-gradient(135deg,var(--bg3),var(--bg2))}
+  .card .meta{position:absolute;top:14px;right:18px;font-size:10px;color:var(--gold-dim);letter-spacing:.18em;text-transform:uppercase}
+  .card .side{font-size:11px;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;margin-bottom:18px}
+  .card .front{font-size:clamp(26px,4.5vw,38px);line-height:1.3}
+  .card .back{font-size:17px;line-height:1.5;max-width:620px}
+  .card .hint{position:absolute;bottom:14px;font-size:11px;color:var(--gold-deep);letter-spacing:.1em}
+  .fc-nav{display:flex;gap:8px;margin-top:14px}
+  .fc-nav button{flex:1;border:1px solid var(--line);color:var(--gold);padding:13px;font-size:12px;
+    letter-spacing:.1em;text-transform:uppercase}
+  .fc-nav button.flip{background:var(--rust);border-color:var(--gold);color:var(--paper)}
+  .fc-nav button:disabled{opacity:.4}
+
+  /* formulas */
+  .f-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+  .f-card{background:var(--bg2);border:1px solid var(--line);padding:18px}
+  .f-card .ft{font-size:11px;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px}
+  .f-card .ff{font-size:17px;margin-bottom:10px}
+  .f-card .fn{font-size:13px;color:var(--gold-dim);line-height:1.5}
+
+  /* tips */
+  .tip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-bottom:28px}
+  .tip{background:var(--bg2);border:1px solid var(--line);padding:22px}
+  .tip h4{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:400;margin-bottom:14px;letter-spacing:.04em}
+  .tip h4 .ic{color:var(--gold)}
+  .tip li{color:var(--gold-dim);font-size:14px;line-height:1.9;padding-left:16px;position:relative}
+  .tip li:before{content:'→';position:absolute;left:0;color:var(--gold-deep)}
+  .callout{background:linear-gradient(135deg,var(--rust),var(--rust2));border:1px solid var(--gold);padding:28px}
+  .callout h4{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:400;margin-bottom:11px}
+  .callout p{font-size:14px;line-height:1.7}
+  .note{margin-top:20px;background:var(--bg2);border:1px solid var(--line);padding:22px}
+  .note h4{font-size:13px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:11px}
+  .note p{color:var(--gold-dim);font-size:14px;line-height:1.7}
+
+  footer{border-top:1px solid var(--line);padding:22px;text-align:center;color:var(--gold-deep);
+    font-size:11px;letter-spacing:.12em;position:relative;z-index:2}
+
+  .fade{animation:fade .35s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* exam countdown */
+  .countdown{display:flex;justify-content:space-between;align-items:center;gap:14px;
+    background:linear-gradient(135deg,var(--rust),var(--rust2));border:1px solid var(--gold);
+    padding:20px 24px;margin-bottom:24px;flex-wrap:wrap}
+  .countdown.set{background:var(--bg2);border:1px dashed var(--line)}
+  .countdown.urgent{animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{border-color:var(--gold)}50%{border-color:var(--copper)}}
+  .cd-big{font-size:34px;line-height:1.05;color:var(--paper)}
+  .cd-label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+  .cd-sub{font-size:13px;color:var(--gold-dim);margin-top:4px}
+  .cd-input{background:var(--bg);border:1px solid var(--line);color:var(--paper);padding:10px 12px;font-size:14px;border-radius:4px}
+  .cd-edit{border:1px solid var(--gold);color:var(--paper);padding:8px 16px;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+
+  /* tab notification badge */
+  .tabbadge{display:inline-block;margin-left:6px;background:var(--copper);color:var(--bg);
+    font-size:10px;font-weight:600;padding:1px 6px;border-radius:9px;vertical-align:middle}
+
+  /* mock exam progress bar */
+  .mock-bar{display:flex;justify-content:space-between;align-items:center;
+    background:var(--bg2);border:1px solid var(--line);padding:12px 18px;margin-bottom:16px;
+    position:sticky;top:48px;z-index:15;font-size:13px;color:var(--gold)}
+  .mock-bar #mockTimer{color:var(--gold-dim)}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow"><div class="bar"></div><span class="sans">Fourteen Days to License</span></div>
+    <h1>Georgia Real Estate <em>Salesperson</em> Exam</h1>
+    <p class="sub sans">A guaranteed-progress plan. 152 questions, two portions, 4 hours, 75% to pass each. Built to the PSI content outline and your Kaplan schedule.</p>
+    <div class="pbar-wrap">
+      <div class="pbar-outer">
+        <div class="pbar-label sans"><span>Overall Progress</span><span id="ovText">0 / 0 · 0%</span></div>
+        <div class="pbar"><i id="ovBar" style="width:0%"></i></div>
+      </div>
+      <button class="reset sans" id="resetBtn">↺ Reset</button>
+    </div>
+  </div>
+</header>
+
+<nav><div class="inner" id="tabs"></div></nav>
+<main id="view"></main>
+<footer class="sans">BUILT TO THE PSI GEORGIA CONTENT OUTLINE · YOU GOT THIS</footer>
+
+<script>
+/* ============================ DATA ============================ */
+const PLAN = [
+  {day:1,week:1,title:'Diagnostic & Foundation',focus:'Baseline test + Real Property Basics',
+   topics:['Bundle of rights','Real vs personal property','Fixtures'],
+   tasks:['Take Kaplan diagnostic practice test (DO NOT study first — get a true baseline)','Read Kaplan Unit 1: Real Property & The Law','Watch any "LEARN National Laws" session today (4pm, 11am, or 8pm)','Memorize the 6 sticks: Bundle of Rights = DEEP-PIE (Disposition, Encumbrance, Enjoyment, Possession, Income, Exclusion)','Memorize fixture test: MARIA (Method, Adaptability, Relationship, Intention, Agreement)','Complete Day 1 mini-quiz below (target 70%)']},
+  {day:2,week:1,title:'Estates & Ownership',focus:'Freehold/leasehold estates, Co-ownership',
+   topics:['Fee simple','Life estates','Joint tenancy','Tenancy in common','Condo vs co-op'],
+   tasks:['Read Kaplan unit on Estates in Land','Attend LEARN National Laws session (1.25 hrs)','Memorize 4 unities of joint tenancy: PITT (Possession, Interest, Time, Title)','Flashcards: Fee Simple, Life Estate, Pur Autre Vie, Remainder, Reversion','Practice 25 Kaplan questions on Property Ownership (target 75%)','Complete Day 2 mini-quiz below']},
+  {day:3,week:1,title:'Land Use & Legal Descriptions',focus:'Government rights, Encumbrances, Descriptions',
+   topics:['PETE powers','Liens','Easements','Encroachments','Zoning'],
+   tasks:['Read Kaplan units on Land Use Controls + Legal Descriptions','Attend LEARN National Laws session','Memorize PETE: Police power, Eminent domain, Taxation, Escheat','Memorize 3 legal description methods: Metes & Bounds, Lot & Block, Rectangular Survey','Memorize easement types: appurtenant, in gross, by necessity, by prescription','Practice 25 Kaplan questions on Land Use (target 75%)','Complete Day 3 mini-quiz below']},
+  {day:4,week:1,title:'Agency Law',focus:'Fiduciary duties, Agency relationships (13% of exam)',
+   topics:['OLD CAR duties','Agency creation','Sub-agency','Buyer agency','Dual agency'],
+   tasks:['Read Kaplan Unit on Agency — this is 13% of your exam','Attend LEARN National Laws session','Memorize OLD CAR: Obedience, Loyalty, Disclosure, Confidentiality, Accountability, Reasonable care','Memorize: Single agency, Dual agency, Designated agency, Transaction broker','Memorize listing types: Exclusive Right to Sell, Exclusive Agency, Open, Net','Practice 30 Kaplan questions on Agency (target 80%)','Complete Day 4 mini-quiz below']},
+  {day:5,week:1,title:'Contracts',focus:'Contract law — HIGHEST WEIGHTED at 17%',
+   topics:['COCAL elements','Statute of Frauds','Bilateral vs unilateral','Contingencies','Breach remedies'],
+   tasks:['Read Kaplan Contracts chapter TWICE — this is 17% of the exam','Attend LEARN National Laws session','Memorize 5 elements: COCAL (Competent parties, Offer/acceptance, Consideration, Agreement, Legal purpose)','Memorize Statute of Frauds — RE contracts MUST be in writing','Memorize Void vs Voidable vs Unenforceable vs Valid','Memorize Liquidated damages vs Specific performance vs Rescission','Practice 35 Kaplan questions on Contracts (target 80%)','Complete Day 5 mini-quiz below']},
+  {day:6,week:1,title:'Financing',focus:'Mortgages, Loan types, Federal lending laws',
+   topics:['FHA/VA/USDA','RESPA','TRID 3/7/3','ECOA','Foreclosure'],
+   tasks:['Read Kaplan Financing chapter','Attend LEARN National Laws session','Memorize loan types: FHA, VA, USDA, Conventional, Conforming/Non-conforming','Memorize: TRID 3-day rule, RESPA bans kickbacks, ECOA bans lending discrimination','Memorize mortgage clauses: acceleration, alienation/due-on-sale, defeasance, prepayment','Memorize: discount points = 1% of LOAN amount; each point ≈ 0.25% rate drop','Practice 30 Kaplan questions on Financing (target 75%)','Complete Day 6 mini-quiz below']},
+  {day:7,week:1,title:'Practice Test + Review',focus:'WEEK 1 CHECKPOINT — Full National Practice Test',
+   topics:['Full review','Find weak spots'],
+   tasks:['Take FULL 100-question Kaplan National practice exam, TIMED (2.5 hrs)','Goal: 70%+ on this test','Review EVERY wrong answer — write down the concept','Identify your 3 weakest topics','Rest your brain in the evening — take a walk','Complete Day 7 reflection quiz below']},
+  {day:8,week:2,title:'Valuation & Appraisal',focus:'CMA, 3 approaches to value',
+   topics:['CMA vs BPO vs Appraisal','Sales comparison','Cost approach','Income approach','Depreciation'],
+   tasks:['Read Kaplan Valuation/Appraisal chapter','Attend LEARN National Laws or Exam Prep session','Memorize 3 approaches: Sales Comparison (residential), Cost (new/unique), Income (rentals)','Memorize income approach: V = NOI ÷ Cap Rate — you WILL see this','Memorize DUST: Demand, Utility, Scarcity, Transferability','Practice 25 Kaplan questions on Valuation (target 75%)','Complete Day 8 mini-quiz below']},
+  {day:9,week:2,title:'Fair Housing + Practice of RE',focus:'Federal fair housing — guaranteed questions',
+   topics:['7 protected classes','ADA','Steering/blockbusting/redlining','Antitrust'],
+   tasks:['Read Kaplan Fair Housing chapter','Attend LEARN National Laws session','Memorize 7 protected classes: Race, Color, Religion, National Origin, Sex, Familial Status, Disability','Memorize: Civil Rights Act of 1866 = NO exemptions for race','Memorize: Steering, Blockbusting, Redlining, Disparate Treatment','Memorize Sherman Antitrust: price fixing, market allocation, tie-in agreements','Practice 25 Kaplan questions (target 80%)','Complete Day 9 mini-quiz below']},
+  {day:10,week:2,title:'Math Day',focus:'Real estate math (7% but easy points)',
+   topics:['T-Method','Area','Commission','Proration','LTV','Cap rate'],
+   tasks:['Attend LEARN Math session (8pm) — this is gold','Memorize T-Method: Part = Whole × Rate','Memorize area formulas (rectangle, triangle, irregular shapes)','Memorize: 1 acre = 43,560 sq ft — this WILL appear','Memorize commission math + proration (360-day banking method)','Memorize LTV, equity, points calculations','Practice 30 math questions (target 75% — math improves with reps)','Complete Day 10 math quiz below']},
+  {day:11,week:2,title:'GA State Law — Part 1',focus:'License law, GREC, BRRETA',
+   topics:['GREC','GA license rules','BRRETA','Security deed','Recovery Fund'],
+   tasks:['Attend LEARN Georgia Laws session (9am or 7pm)','Read Kaplan GA Laws chapter on Licensing','Memorize: 75 hrs pre-license, 25 hrs post-license (1st yr), 36 hrs CE (every 4 yrs)','Memorize: GREC = 6 commissioners (5 RE + 1 consumer)','Memorize: BRRETA = GA agency law, requires written engagement','Memorize: GA is a TITLE THEORY state, uses SECURITY DEED (not mortgage)','Memorize: Recovery Fund — $25K per claim, $75K aggregate','Practice 25 GA-specific questions (target 75%)','Complete Day 11 mini-quiz below']},
+  {day:12,week:2,title:'GA State Law — Part 2',focus:'Trust accounts, disclosures, contracts',
+   topics:['Trust accounts','GA disclosures','GA closing','Transfer tax','Intangible tax'],
+   tasks:['Attend LEARN Georgia Laws session','Read Kaplan GA Laws chapter on Practice + Closing','Memorize trust account rules: deposit timely, never commingle','Memorize: GA requires written brokerage engagement to create agency','Memorize: GA Seller\u2019s Property Disclosure Statement','Memorize: GA closing — typically attorney-conducted (attorney state)','Memorize: GA transfer tax = $1 per $1,000; intangible tax = $1.50 per $500 of loan','Practice 25 GA questions (target 80%)','Complete Day 12 mini-quiz below']},
+  {day:13,week:2,title:'FULL MOCK EXAM',focus:'Simulate real test conditions',
+   topics:['Full exam simulation'],
+   tasks:['Take FULL 152-question Kaplan practice exam, TIMED (4 hrs, no breaks)','GOAL: 80% overall — 75%+ National, 75%+ GA','Use only an on-screen calculator (PSI provides one — no phone)','No notes, no books — exactly like test day','Review EVERY wrong answer — understand WHY','80%+ → you\u2019re ready, schedule the exam','75-79% → review weak topics tomorrow, schedule 3-4 days out','Below 75% → extend 3-5 days, redo Days 5, 9, 10, 11']},
+  {day:14,week:2,title:'Final Review & Exam Prep',focus:'Light review, mental prep',
+   topics:['Light review only','Mental prep'],
+   tasks:['Review flashcards — NO new material today','Re-read your "wrong answer" notes from Day 13','Practice 30 questions on your weakest topic only','Pack exam bag: 2 IDs, GCIC report, snack, water','Review PSI rules: arrive 30 min early, no electronics','Light dinner, NO heavy studying after 6pm','Sleep 8 hours — memory consolidates during sleep','Tomorrow: TRUST YOUR PREP. You put in the work.']}
+];
+
+const QUIZZES = {
+ 1:[
+  {q:'Which is a test for whether an item is a fixture?',o:['MARIA','OLD CAR','PETE','DUST'],a:0,e:'MARIA: Method of attachment, Adaptability, Relationship of parties, Intention, Agreement.'},
+  {q:'The Bundle of Rights includes all EXCEPT:',o:['Right to use','Right to possess','Right to ignore zoning','Right to exclude'],a:2,e:'You cannot ignore zoning — that is police power, a government limit on the bundle.'},
+  {q:'A built-in dishwasher attached with screws and plumbing is most likely:',o:['Personal property','A fixture (real property)','A trade fixture','Chattel'],a:1,e:'Method of attachment + adaptability to the kitchen make it a fixture.'},
+  {q:'Real property includes:',o:['Only the land','Land + permanent attachments + rights','Land + the furniture','Only buildings'],a:1,e:'Real property = land + permanent attachments + the bundle of legal rights.'},
+  {q:'Personal property is also called:',o:['Realty','Chattel','Fixture','Appurtenance'],a:1,e:'Personal property (movable, not attached) is called chattel or personalty.'},
+  {q:'The process of personal property becoming real property is:',o:['Severance','Annexation','Accession','Avulsion'],a:1,e:'Annexation = attaching personal property so it becomes a fixture. Severance is the reverse.'},
+  {q:'A tenant installs shelving for their business. At lease end it is usually:',o:['A fixture that stays','A trade fixture the tenant removes','Real property','Owned by the landlord'],a:1,e:'Trade fixtures used in a business may be removed by the tenant before the lease ends.'},
+  {q:'Water rights of a landowner whose land borders a moving river are:',o:['Littoral rights','Riparian rights','Prior appropriation','Percolating rights'],a:1,e:'Riparian = flowing water (river/stream). Littoral = stationary water (lake/ocean).'},
+  {q:'Which is an example of an appurtenance?',o:['A garden hose','An easement that benefits the land','A rented appliance','Office furniture'],a:1,e:'Appurtenances (like easements and water rights) run with the land and transfer with it.'},
+  {q:'Land plus everything permanently attached, but NOT the legal rights, describes:',o:['Real property','Real estate','Personal property','A fixture'],a:1,e:'Real estate = land + improvements. Real property adds the bundle of legal rights.'},
+  {q:'Trees and crops that require annual cultivation (emblements) are generally:',o:['Real property','Personal property','Fixtures','Appurtenances'],a:1,e:'Emblements (annual crops from labor) are treated as personal property.'},
+  {q:'Which best describes "land" in the legal sense?',o:['Only the surface','Surface, subsurface, and air above','Surface and buildings','Just the soil'],a:1,e:'Land legally includes the surface, everything beneath to the center of the earth, and the air above.'},
+  {q:'The right to control who enters your property is the right of:',o:['Disposition','Exclusion','Enjoyment','Income'],a:1,e:'Exclusion = the right to keep others off the property.'},
+  {q:'Mineral rights are an example of:',o:['Subsurface rights','Air rights','Littoral rights','Trade fixtures'],a:0,e:'Mineral and oil/gas rights are subsurface rights and can be sold separately from the surface.'},
+  {q:'A homeowner sells their house but wants to keep the chandelier. They should:',o:['Assume it is personal property','Exclude it in writing in the contract','Remove it after closing','Tell the agent verbally'],a:1,e:'Anything attached is presumed a fixture; to keep it, exclude it IN WRITING in the contract.'},
+  {q:'The right to sell, lease, or will property is the right of:',o:['Possession','Disposition','Enjoyment','Exclusion'],a:1,e:'Disposition = the right to transfer the property by sale, gift, or will.'}
+ ],
+ 2:[
+  {q:'The 4 unities required for joint tenancy are:',o:['MARIA','PITT','PETE','DUST'],a:1,e:'PITT: Possession, Interest, Time, Title — all four required.'},
+  {q:'A life estate measured by the life of someone OTHER than the tenant is:',o:['Fee simple','Pur autre vie','Remainder','Reversion'],a:1,e:'Pur autre vie = "for another\u2019s life."'},
+  {q:'The MOST COMPLETE form of ownership is:',o:['Life estate','Fee simple determinable','Fee simple absolute','Defeasible fee'],a:2,e:'Fee simple absolute: no conditions, no time limit, inheritable.'},
+  {q:'When one joint tenant dies, their interest:',o:['Goes to their heirs','Goes to surviving joint tenants automatically','Becomes tenancy in common','Reverts to the state'],a:1,e:'Right of survivorship — passes outside probate to surviving joint tenants.'},
+  {q:'The default form of co-ownership with no right of survivorship is:',o:['Joint tenancy','Tenancy in common','Tenancy by the entirety','Severalty'],a:1,e:'Tenancy in common — shares may be unequal and pass to heirs, not co-owners.'},
+  {q:'Ownership by one person alone is called:',o:['Severalty','Partition','Survivorship','Entirety'],a:0,e:'Ownership in severalty = sole ownership by one individual or entity.'},
+  {q:'Tenancy by the entirety is available only to:',o:['Business partners','Married couples','Siblings','Any two people'],a:1,e:'Tenancy by the entirety is reserved for legally married spouses.'},
+  {q:'In a condominium, the individual owner holds fee simple title to:',o:['The entire building','Their unit + a share of common areas','Only the land','Nothing — they lease'],a:1,e:'Condo owners own their unit in fee simple plus an undivided share of common elements.'},
+  {q:'In a cooperative, the resident actually owns:',o:['Their unit in fee simple','Shares in a corporation + a proprietary lease','The land','The whole building'],a:1,e:'Co-op residents own stock in the corporation and hold a proprietary lease for their unit.'},
+  {q:'A future interest that returns the property to the original grantor is a:',o:['Remainder','Reversion','Reverter','Estate for years'],a:1,e:'Reversion = goes back to the grantor. Remainder = goes to a named third party.'},
+  {q:'A life tenant may do all EXCEPT:',o:['Live in the property','Lease the property','Damage it (commit waste)','Collect rent'],a:2,e:'A life tenant cannot commit waste (damage that harms the future interest holder).'},
+  {q:'A leasehold estate gives the tenant:',o:['Ownership','Possession for a period','Survivorship','Fee title'],a:1,e:'Leasehold = right to possess for a defined period, not ownership.'},
+  {q:'A fee simple subject to a condition that can end it is a:',o:['Life estate','Defeasible fee','Leasehold','Estate for years'],a:1,e:'A defeasible fee can be lost if a stated condition is violated.'},
+  {q:'To force the sale or division of co-owned property, a co-owner files for:',o:['Escheat','Partition','Condemnation','Subordination'],a:1,e:'A partition action divides or forces sale of property among co-owners.'},
+  {q:'An estate for years (fixed-term lease) ends:',o:['On 30 days notice','Automatically on the end date','Only by eviction','At the tenant\u2019s death'],a:1,e:'An estate for years has a definite start and end date; it ends automatically with no notice.'},
+  {q:'Which co-ownership form allows unequal ownership shares?',o:['Joint tenancy','Tenancy by the entirety','Tenancy in common','None'],a:2,e:'Tenancy in common can have unequal shares; joint tenancy requires equal interests.'}
+ ],
+ 3:[
+  {q:'PETE includes all EXCEPT:',o:['Eminent domain','Escheat','Easement','Police power'],a:2,e:'PETE = Police power, Eminent domain, Taxation, Escheat. Easement is private.'},
+  {q:'A property tax lien is:',o:['General, voluntary','Specific, involuntary','General, involuntary','Specific, voluntary'],a:1,e:'Attaches to one property (specific), imposed without consent (involuntary), first priority.'},
+  {q:'An easement appurtenant requires:',o:['One parcel','Two parcels: dominant + servient','Government approval','A written agreement only'],a:1,e:'Needs a dominant tenement (benefits) and servient tenement (burdened).'},
+  {q:'Metes and bounds descriptions use:',o:['Townships','Lot and block numbers','Distances + directions from a POB','GPS only'],a:2,e:'Metes (distances) + bounds (directions) trace the perimeter from the Point of Beginning.'},
+  {q:'Government taking of private land for public use is:',o:['Escheat','Eminent domain','Police power','Estoppel'],a:1,e:'Eminent domain is the power; condemnation is the process; just compensation is required.'},
+  {q:'When an owner dies with no heirs and no will, the property goes to the state by:',o:['Escheat','Eminent domain','Condemnation','Reversion'],a:0,e:'Escheat returns ownerless property to the state.'},
+  {q:'Zoning ordinances are an exercise of:',o:['Eminent domain','Police power','Taxation','Escheat'],a:1,e:'Zoning is police power — regulating land use for public health, safety, and welfare.'},
+  {q:'A use that legally existed before a new zoning law is a:',o:['Variance','Nonconforming use','Special exception','Spot zone'],a:1,e:'A nonconforming use ("grandfathered") predates the zoning change and may continue.'},
+  {q:'Permission to deviate from zoning due to hardship is a:',o:['Variance','Nonconforming use','Easement','Covenant'],a:0,e:'A variance allows a specific deviation from zoning when strict enforcement causes hardship.'},
+  {q:'An easement created by long, open, continuous use without permission is:',o:['By necessity','By prescription','In gross','Appurtenant'],a:1,e:'Prescriptive easements arise from open, notorious, continuous use over the statutory period.'},
+  {q:'A utility company\u2019s right to run power lines across many properties is an easement:',o:['Appurtenant','In gross','By necessity','By estoppel'],a:1,e:'Commercial easement in gross — benefits a company, not an adjacent parcel.'},
+  {q:'A fence that crosses onto a neighbor\u2019s lot is a(n):',o:['Easement','Encroachment','License','Lien'],a:1,e:'An encroachment is an unauthorized physical intrusion onto another\u2019s property.'},
+  {q:'The legal description method using a grid of townships and ranges is:',o:['Metes and bounds','Lot and block','Rectangular (government) survey','Monument'],a:2,e:'The rectangular survey system uses principal meridians, baselines, townships, and ranges.'},
+  {q:'A mechanic\u2019s lien is filed by:',o:['The IRS','A contractor who was not paid','A court judgment','The county tax office'],a:1,e:'Unpaid contractors/suppliers file a mechanic\u2019s lien against the specific property.'},
+  {q:'Private restrictions placed by a developer on all lots in a subdivision are:',o:['Zoning','CC&Rs (deed restrictions)','Variances','Easements'],a:1,e:'CC&Rs are private deed restrictions; if stricter than zoning, the stricter rule applies.'},
+  {q:'A lien that attaches to ALL of a debtor\u2019s property is a:',o:['Specific lien','General lien','Voluntary lien','Mechanic\u2019s lien'],a:1,e:'A general lien (e.g., judgment, IRS) attaches to all of the debtor\u2019s property.'}
+ ],
+ 4:[
+  {q:'Which is NOT a fiduciary duty owed to the principal?',o:['Loyalty','Disclosure','Honesty to non-client customers','Confidentiality'],a:2,e:'Honesty/fair dealing is owed to everyone. OLD CAR duties are owed only to the principal.'},
+  {q:'A listing where the broker is paid only if THEY find the buyer is:',o:['Exclusive right to sell','Exclusive agency','Open listing','Net listing'],a:2,e:'Open listing — only the broker who procures the buyer is paid; owner may also sell.'},
+  {q:'Dual agency is allowed in Georgia when:',o:['Never','Both parties give informed written consent','Only the seller consents','The broker decides'],a:1,e:'GA permits dual agency with written informed consent from BOTH parties.'},
+  {q:'A broker\u2019s "puffing" is:',o:['Always fraud','Always permitted','Permitted unless it misstates material facts','A breach of duty'],a:2,e:'"Best house on the block" = puffing. Stating a false fact = misrepresentation/fraud.'},
+  {q:'The "O" in OLD CAR stands for:',o:['Obligation','Obedience','Openness','Ownership'],a:1,e:'Obedience — follow the client\u2019s lawful instructions.'},
+  {q:'An agent who has authority for one specific task (like selling a home) is a:',o:['General agent','Special agent','Universal agent','Designated agent'],a:1,e:'A special agent has limited authority for a single transaction.'},
+  {q:'A property manager handling all aspects of a building is typically a:',o:['Special agent','General agent','Universal agent','Subagent'],a:1,e:'A general agent has ongoing, broad authority within a defined scope.'},
+  {q:'Who is the principal (client) in a typical listing?',o:['The buyer','The seller','The lender','The other broker'],a:1,e:'In a listing, the seller hires the broker, so the seller is the principal/client.'},
+  {q:'Agency that arises from the parties\u2019 conduct, not a written contract, is:',o:['Express agency','Implied agency','Designated agency','Subagency'],a:1,e:'Implied agency is created by actions/behavior rather than a written/spoken agreement.'},
+  {q:'Disclosing your seller-client\u2019s lowest acceptable price to the buyer violates:',o:['Obedience','Confidentiality','Accountability','Disclosure'],a:1,e:'The client\u2019s bargaining position is confidential — revealing it breaches confidentiality.'},
+  {q:'The duty to account for all money and documents is:',o:['Loyalty','Accountability','Care','Obedience'],a:1,e:'Accountability = properly handle and account for funds and paperwork.'},
+  {q:'A net listing is best described as:',o:['Illegal in every state','Risky and prohibited in many states','The safest listing','Required by GREC'],a:1,e:'Net listings create a conflict of interest and are banned or discouraged in many states.'},
+  {q:'When does a listing agreement typically terminate?',o:['Only by sale','Expiration, completion, or mutual agreement','Never','Only by the broker'],a:1,e:'Agency ends by performance, expiration, mutual agreement, or operation of law.'},
+  {q:'A subagent owes fiduciary duties to:',o:['The buyer','The principal of the listing broker','No one','The MLS'],a:1,e:'A subagent works on behalf of, and owes duties to, the listing broker\u2019s principal (seller).'},
+  {q:'Putting the client\u2019s interests above your own is the duty of:',o:['Disclosure','Loyalty','Care','Accountability'],a:1,e:'Loyalty = act in the client\u2019s best interest, ahead of the agent\u2019s own.'},
+  {q:'An agent must disclose to their seller-client an offer that is:',o:['Only full-price offers','All offers, even low ones','Only cash offers','Only the highest offer'],a:1,e:'Disclosure duty: present ALL offers to the client unless instructed otherwise in writing.'}
+ ],
+ 5:[
+  {q:'COCAL elements include all EXCEPT:',o:['Competent parties','Consideration','Notarization','Legal purpose'],a:2,e:'COCAL: Competent parties, Offer/acceptance, Consideration, Agreement, Legal purpose.'},
+  {q:'A contract signed by a 16-year-old is:',o:['Void','Voidable by the minor','Voidable by the adult','Fully enforceable'],a:1,e:'Minor lacks capacity → voidable at the minor\u2019s option.'},
+  {q:'The Statute of Frauds requires that:',o:['All contracts be notarized','RE contracts be in writing','Contracts have a witness','Only commercial contracts be written'],a:1,e:'Land sale contracts must be in writing and signed by the party to be charged.'},
+  {q:'Buyer breaches; seller keeps earnest money. This is:',o:['Specific performance','Liquidated damages','Rescission','Compensatory damages'],a:1,e:'Liquidated damages — a pre-agreed amount the seller keeps on buyer default.'},
+  {q:'After acceptance but before closing, the contract is:',o:['Void','Executed','Executory','Unilateral'],a:2,e:'Executory = binding but not yet fully performed. It becomes executed at closing.'},
+  {q:'A contract for an illegal purpose is:',o:['Voidable','Void','Unenforceable','Valid'],a:1,e:'A contract with an illegal purpose is void — it never had legal effect.'},
+  {q:'An option contract is best described as:',o:['A binding sale','The right, not the obligation, to buy within a time','A lease','A loan'],a:1,e:'An option gives the optionee the right (not duty) to buy within a set period for a set price.'},
+  {q:'A counteroffer does what to the original offer?',o:['Accepts it','Terminates it','Extends it','Assigns it'],a:1,e:'A counteroffer rejects and terminates the original offer, creating a new one.'},
+  {q:'A bilateral contract involves:',o:['A promise for an act','A promise for a promise','One party only','No consideration'],a:1,e:'Bilateral = both parties exchange promises (most sales contracts).'},
+  {q:'When a court orders the seller to actually complete the sale, the remedy is:',o:['Liquidated damages','Specific performance','Rescission','Forfeiture'],a:1,e:'Specific performance compels performance because real estate is considered unique.'},
+  {q:'Mutual agreement to cancel a contract and restore parties to their original position is:',o:['Assignment','Rescission','Novation','Breach'],a:1,e:'Rescission unwinds the contract and returns both parties to where they started.'},
+  {q:'Substituting a new party or contract for an old one, with consent, is:',o:['Assignment','Novation','Rescission','Contingency'],a:1,e:'Novation replaces a party or obligation with a new one, releasing the original.'},
+  {q:'"Time is of the essence" in a contract means:',o:['Deadlines are flexible','Deadlines must be strictly met','There is no closing date','The contract is void'],a:1,e:'It makes stated deadlines binding; missing one can be a breach.'},
+  {q:'Earnest money primarily serves to:',o:['Pay the agent','Show the buyer\u2019s good-faith commitment','Pay property taxes','Replace the down payment requirement'],a:1,e:'Earnest money demonstrates the buyer\u2019s serious intent and may become liquidated damages.'},
+  {q:'A financing contingency protects the:',o:['Seller','Buyer','Listing broker','Lender'],a:1,e:'It lets the buyer exit (often keeping earnest money) if they cannot obtain a loan.'},
+  {q:'A contract missing consideration is:',o:['Valid','Voidable','Not a valid contract','Executed'],a:2,e:'Consideration (something of value exchanged) is required; without it there is no contract.'},
+  {q:'Assignment of a contract means:',o:['Canceling it','Transferring rights to another party','Adding a contingency','Signing it'],a:1,e:'Assignment transfers one party\u2019s contractual rights/obligations to a third party.'}
+ ],
+ 6:[
+  {q:'TRID requires the Loan Estimate within how many business days of application?',o:['1','3','7','10'],a:1,e:'TRID 3-7-3: LE within 3 days, 7 days to closing, 3-day CD review.'},
+  {q:'Which loan requires 0% down for qualified borrowers?',o:['FHA','Conventional','VA','Jumbo'],a:2,e:'VA loans finance 100% for qualified veterans. FHA needs a minimum of 3.5%.'},
+  {q:'A clause letting the lender demand full payment if the property is sold:',o:['Acceleration','Defeasance','Alienation (due-on-sale)','Prepayment'],a:2,e:'Alienation = due on sale; prevents loan assumption. Acceleration is triggered by default.'},
+  {q:'RESPA primarily prohibits:',o:['High interest rates','Kickbacks for settlement services','ARMs','Cash deals'],a:1,e:'RESPA bans kickbacks/unearned fees and requires the Loan Estimate & Closing Disclosure.'},
+  {q:'2 discount points on a $300,000 loan equals:',o:['$300','$600','$3,000','$6,000'],a:3,e:'1 point = 1% of LOAN. 2% × $300,000 = $6,000.'},
+  {q:'FHA loans are:',o:['Made directly by the FHA','Insured by the FHA','Guaranteed by the VA','For veterans only'],a:1,e:'FHA insures lenders against loss; private lenders make the actual loans.'},
+  {q:'A loan with equal payments that fully pays off over the term is:',o:['Interest-only','Amortized','Balloon','Adjustable'],a:1,e:'A fully amortized loan pays principal + interest to a zero balance by the end of the term.'},
+  {q:'A balloon loan features:',o:['Equal payments to payoff','A large final lump-sum payment','No interest','Government backing'],a:1,e:'Balloon loans have small/partial payments then a large final balance due.'},
+  {q:'The document that is the promise to repay the debt is the:',o:['Mortgage','Promissory note','Deed','Lien'],a:1,e:'The promissory note is the borrower\u2019s promise to repay; the mortgage/deed secures it.'},
+  {q:'In a mortgage, the borrower is the:',o:['Mortgagee','Mortgagor','Trustee','Beneficiary'],a:1,e:'Mortgagor = borrower (gives the mortgage). Mortgagee = lender.'},
+  {q:'PMI on a conventional loan is generally required when the down payment is below:',o:['5%','10%','20%','25%'],a:2,e:'Less than 20% down (LTV over 80%) typically requires private mortgage insurance.'},
+  {q:'The Truth in Lending Act (Reg Z) requires disclosure of the:',o:['Property value','APR and finance charges','Agent commission','Seller\u2019s costs'],a:1,e:'TILA requires lenders to disclose the APR and total finance charges to borrowers.'},
+  {q:'ECOA prohibits lending discrimination based on all EXCEPT:',o:['Race','Marital status','Credit score','Religion'],a:2,e:'Lenders MAY consider creditworthiness/credit score; they may not use protected categories.'},
+  {q:'A loan that exceeds conforming (Fannie/Freddie) limits is a:',o:['FHA loan','Jumbo loan','VA loan','USDA loan'],a:1,e:'Jumbo loans exceed conforming limits and usually have stricter requirements.'},
+  {q:'When a borrower defaults and the lender forces a sale, the process is:',o:['Escheat','Foreclosure','Subrogation','Novation'],a:1,e:'Foreclosure is the legal process to sell the secured property after default.'},
+  {q:'A USDA loan is intended for:',o:['Urban luxury homes','Rural/suburban eligible areas','Commercial property','Veterans only'],a:1,e:'USDA/Rural Development loans support buyers in eligible rural and some suburban areas.'},
+  {q:'The clause that releases the lien when the loan is fully paid is:',o:['Acceleration','Defeasance','Alienation','Escalation'],a:1,e:'Defeasance requires the lender to release the lien once the debt is satisfied.'}
+ ],
+ 7:[
+  {q:'You scored 60% on Contracts. You should:',o:['Move on — only 17%','Re-read + do 50 more practice questions','Skip to GA topics','Just do flashcards'],a:1,e:'Contracts is the largest topic (17%). 60% is too low — drill it to 80%+.'},
+  {q:'Your overall Week-1 score was 72%. You should:',o:['Schedule the exam now','Continue the plan — you are on track','Give up','Skip Week 2'],a:1,e:'72% at the halfway point is on track; the plan pushes you past 80% by Day 13.'},
+  {q:'The most effective study technique now is:',o:['Re-reading the textbook','Active recall + practice on weak areas','More videos','Cramming the night before'],a:1,e:'Active recall (self-testing) beats passive re-reading by a wide margin.'},
+  {q:'On the National portion you must answer at least how many of 100 correctly?',o:['65','70','75','80'],a:2,e:'You need 75% on each portion — that is 75 of 100 on the National portion.'},
+  {q:'On the GA portion (52 questions) you must get at least:',o:['26','39','45','52'],a:1,e:'75% of 52 ≈ 39 questions correct on the Georgia portion.'},
+  {q:'If you keep missing math questions, the best fix is:',o:['Avoid them on the exam','Drill the formulas daily until automatic','Guess every time','Skip Day 10'],a:1,e:'Math is the most "trainable" section — repetition makes the formulas automatic.'},
+  {q:'A good use of a wrong answer is to:',o:['Ignore it','Write down the concept and why the right answer is right','Memorize the letter','Retake instantly'],a:1,e:'Understanding WHY beats memorizing the answer letter, which does not transfer.'},
+  {q:'Both exam portions are intermixed, meaning:',o:['You finish National first','Questions appear in random order','GA is always last','You choose the order'],a:1,e:'PSI intermixes National and GA questions; you cannot tell which is which.'},
+  {q:'Experimental (unscored) questions on the exam:',o:['Lower your score','Do not count toward your score','Are marked clearly','Replace real questions'],a:1,e:'A handful of unscored pretest questions appear but do not affect your score.'},
+  {q:'The single highest-weighted national topic is:',o:['Agency','Contracts','Financing','Math'],a:1,e:'Contracts is ~17%, the largest single national topic.'},
+  {q:'If you scored below 60% overall after Week 1, the smartest move is:',o:['Schedule the exam anyway','Extend your timeline and re-drill weak topics','Quit','Only study GA law'],a:1,e:'Below 60% means you need more time on fundamentals before testing.'},
+  {q:'Timed practice tests matter because they build:',o:['Vocabulary only','Pacing and endurance for a 4-hour exam','Nothing useful','Luck'],a:1,e:'Simulating real timing trains pacing and stamina for the actual 4-hour test.'},
+  {q:'Reviewing only the questions you got RIGHT is:',o:['The best strategy','Less valuable than reviewing the wrong ones','Required','Pointless entirely'],a:1,e:'Your wrong answers reveal gaps — that is where the highest-value review is.'},
+  {q:'A realistic readiness signal to schedule the exam is:',o:['One 70% test','Consistent 80%+ on full-length practice exams','A good feeling','Finishing the textbook'],a:1,e:'Consistent 80%+ on multiple full-length tests is a strong readiness indicator.'},
+  {q:'Fair housing and agency questions are valuable to nail because they are:',o:['Rare','Frequently tested and rule-based (easy points once learned)','Optional','Only on the GA portion'],a:1,e:'They are heavily tested and rule-based, so studying pays off reliably.'}
+ ],
+ 8:[
+  {q:'Best approach for a single-family home value:',o:['Cost','Income','Sales comparison','GRM'],a:2,e:'Sales comparison is primary for residential (recent comparable sales).'},
+  {q:'NOI $24,000, cap rate 8%. Value =',o:['$192,000','$300,000','$240,000','$320,000'],a:1,e:'V = NOI ÷ Cap = $24,000 ÷ 0.08 = $300,000.'},
+  {q:'DUST refers to:',o:['Government powers','Fiduciary duties','Characteristics of value','Depreciation types'],a:2,e:'Demand, Utility, Scarcity, Transferability.'},
+  {q:'Functional obsolescence is:',o:['Wear and tear','Outdated design/features','Bad neighborhood','Foundation cracks'],a:1,e:'Functional = inside the property (outdated layout). External = outside (neighborhood).'},
+  {q:'Best approach for valuing a brand-new, unique building (like a school):',o:['Sales comparison','Cost approach','Income approach','GRM'],a:1,e:'The cost approach suits new or special-purpose properties with few comparables.'},
+  {q:'An appraisal is an:',o:['Exact price','Opinion of value','Sale guarantee','Offer'],a:1,e:'An appraisal is a professional opinion of value as of a specific date.'},
+  {q:'A CMA is prepared by a:',o:['Licensed appraiser','Real estate agent','Lender','Tax assessor'],a:1,e:'Agents prepare CMAs to suggest pricing; they are not formal appraisals.'},
+  {q:'The principle that a property\u2019s max value equals the cost of an equally desirable substitute is:',o:['Conformity','Substitution','Progression','Regression'],a:1,e:'Substitution underlies the sales comparison approach.'},
+  {q:'A modest home among larger expensive homes may gain value by:',o:['Regression','Progression','Escheat','Depreciation'],a:1,e:'Progression: a lesser property\u2019s value rises near higher-value properties.'},
+  {q:'The income approach is most appropriate for:',o:['A vacant lot','An owner-occupied home','An apartment building','A church'],a:2,e:'Income approach fits income-producing properties like apartments.'},
+  {q:'Gross Rent Multiplier (GRM) is calculated as:',o:['NOI ÷ Value','Price ÷ Gross Rent','Rent ÷ Price','Value × Cap Rate'],a:1,e:'GRM = Price ÷ Gross Rent (often monthly for residential).'},
+  {q:'The highest and best use of a property must be all EXCEPT:',o:['Legally permissible','Physically possible','Financially feasible','Owner\u2019s personal preference'],a:3,e:'Highest and best use is objective: legal, possible, feasible, and most productive.'},
+  {q:'A property near a new airport loses value from noise. This is:',o:['Physical deterioration','Functional obsolescence','External (economic) obsolescence','Curable depreciation'],a:2,e:'External obsolescence comes from outside influences and is generally incurable.'},
+  {q:'The four steps to find value by income approach end with:',o:['Subtracting commission','Dividing NOI by the cap rate','Adding land cost','Applying GRM'],a:1,e:'Value = NOI ÷ Cap Rate is the final step of the income approach.'},
+  {q:'A cap rate that goes UP, with NOI unchanged, makes value:',o:['Go up','Go down','Stay the same','Double'],a:1,e:'Value = NOI ÷ Cap. A higher denominator (cap rate) lowers value.'},
+  {q:'Which is NOT one of the three approaches to value?',o:['Sales comparison','Cost','Income','Assessment'],a:3,e:'The three approaches are sales comparison, cost, and income.'}
+ ],
+ 9:[
+  {q:'The 7 federal protected classes include all EXCEPT:',o:['Race','Sexual orientation','Religion','Familial status'],a:1,e:'The 7 federal classes: Race, Color, Religion, National Origin, Sex, Familial Status, Disability.'},
+  {q:'Which protected class has NO exemptions?',o:['Religion','Race','Familial status','Disability'],a:1,e:'The Civil Rights Act of 1866 bars race discrimination with no exemptions, ever.'},
+  {q:'Telling a family "you\u2019d be happier in another neighborhood" is:',o:['Blockbusting','Steering','Redlining','Disparate impact'],a:1,e:'Steering = directing clients by protected class. Illegal even if "well-intentioned."'},
+  {q:'Two brokerages agree to charge the same rate. This is:',o:['Legal','Price fixing — antitrust violation','Steering','Group boycott'],a:1,e:'Price fixing violates the Sherman Antitrust Act; rates must be set independently.'},
+  {q:'Refusing to make loans in a certain neighborhood is:',o:['Steering','Blockbusting','Redlining','Puffing'],a:2,e:'Redlining = denying lending/insurance based on the area\u2019s demographics.'},
+  {q:'Scaring owners into selling by claiming a protected group is moving in is:',o:['Redlining','Blockbusting','Steering','Disparate treatment'],a:1,e:'Blockbusting (panic peddling) induces sales using protected-class fear.'},
+  {q:'"Familial status" protects:',o:['Married couples only','Families with children under 18 / pregnant persons','Senior citizens','Roommates'],a:1,e:'Familial status covers households with children under 18 and pregnant individuals.'},
+  {q:'The Fair Housing Act is enforced by:',o:['The FBI','HUD','The IRS','GREC only'],a:1,e:'The U.S. Department of Housing and Urban Development (HUD) enforces fair housing.'},
+  {q:'The ADA primarily requires:',o:['Lower rents','Reasonable accommodations & accessibility','Free housing','Background checks'],a:1,e:'The Americans with Disabilities Act requires accessibility and reasonable accommodation.'},
+  {q:'Antitrust violation where firms agree not to deal with a competitor is:',o:['Price fixing','Group boycott','Market allocation','Tie-in'],a:1,e:'A group boycott is firms conspiring to refuse to deal with another party.'},
+  {q:'Dividing territories so brokers won\u2019t compete is:',o:['Tie-in agreement','Market allocation','Steering','Redlining'],a:1,e:'Market allocation (dividing regions/customers) is an antitrust violation.'},
+  {q:'Requiring a buyer to use a specific service to get another is a:',o:['Tie-in agreement','Group boycott','Variance','License'],a:0,e:'Tie-in (tying) agreements illegally condition one product/service on another.'},
+  {q:'Advertising "great Christian neighborhood" likely violates fair housing on:',o:['Sex','Religion','Disability','Age'],a:1,e:'Indicating a religious preference in housing ads can violate the religion protection.'},
+  {q:'The Civil Rights Act that bans ALL racial discrimination in property is from:',o:['1866','1968','1988','1991'],a:0,e:'The Civil Rights Act of 1866 prohibits all racial discrimination in property.'},
+  {q:'Penalties for fair housing violations can include:',o:['Only a warning','Fines, damages, and license action','Nothing','A tax credit'],a:1,e:'Violations can bring civil penalties, damages, and disciplinary/license consequences.'},
+  {q:'Treating a disabled applicant\u2019s service animal as a "no pets" violation is:',o:['Allowed','A fair housing violation','Steering','Required'],a:1,e:'Service/assistance animals are a reasonable accommodation, not pets.'}
+ ],
+ 10:[
+  {q:'Square feet in an acre:',o:['10,000','43,560','5,280','160,000'],a:1,e:'1 acre = 43,560 sq ft. Memorize it.'},
+  {q:'$400,000 sale, 6% commission split 50/50. Listing brokerage gets:',o:['$12,000','$24,000','$6,000','$18,000'],a:0,e:'$400,000 × 6% = $24,000 total; 50% = $12,000 to the listing brokerage.'},
+  {q:'80% LTV on a $250,000 purchase = minimum down of:',o:['$25,000','$50,000','$75,000','$200,000'],a:1,e:'Loan = 80% × $250K = $200K. Down = $250K − $200K = $50,000.'},
+  {q:'Annual tax $3,600, 360-day method, daily rate:',o:['$10.00','$9.86','$300','$30'],a:0,e:'$3,600 ÷ 360 = $10/day (banker\u2019s method).'},
+  {q:'A 100ft × 150ft lot in acres:',o:['0.34','0.5','1.5','15,000'],a:0,e:'15,000 sq ft ÷ 43,560 ≈ 0.344 acres.'},
+  {q:'A home sells for $250,000 at 6% commission. Total commission is:',o:['$1,500','$15,000','$25,000','$6,000'],a:1,e:'$250,000 × 0.06 = $15,000.'},
+  {q:'Property valued $180,000, assessed at 40%. Assessed value is:',o:['$72,000','$180,000','$45,000','$108,000'],a:0,e:'$180,000 × 0.40 = $72,000 assessed value.'},
+  {q:'Tax rate 25 mills on $72,000 assessed value =',o:['$180','$1,800','$18,000','$720'],a:1,e:'25 mills = 0.025. $72,000 × 0.025 = $1,800.'},
+  {q:'A lot 660 ft × 660 ft equals how many acres?',o:['5','10','15,000','43,560'],a:1,e:'660 × 660 = 435,600 sq ft ÷ 43,560 = 10 acres.'},
+  {q:'Buyer puts 10% down on $300,000. Loan amount is:',o:['$30,000','$270,000','$290,000','$330,000'],a:1,e:'Down = $30,000; loan = $300,000 − $30,000 = $270,000.'},
+  {q:'Equity if value is $350,000 and loan balance is $215,000:',o:['$135,000','$215,000','$565,000','$350,000'],a:0,e:'Equity = Value − Loan Balance = $350,000 − $215,000 = $135,000.'},
+  {q:'GA transfer tax on a $300,000 sale ($1 per $1,000):',o:['$30','$300','$3,000','$450'],a:1,e:'$300,000 ÷ 1,000 = 300; × $1 = $300.'},
+  {q:'A property generates $36,000 NOI; bought at $400,000. Cap rate is:',o:['9%','11%','7%','15%'],a:0,e:'Cap = NOI ÷ Value = $36,000 ÷ $400,000 = 0.09 = 9%.'},
+  {q:'Agent gets 60% of a $9,000 commission. Agent receives:',o:['$3,600','$5,400','$9,000','$4,500'],a:1,e:'$9,000 × 0.60 = $5,400.'},
+  {q:'Monthly interest on a $200,000 loan at 6% annual (interest-only):',o:['$1,000','$1,200','$12,000','$600'],a:0,e:'Annual interest = $200,000 × 0.06 = $12,000; ÷ 12 = $1,000/month.'},
+  {q:'A room 12 ft × 15 ft has how many square feet?',o:['27','180','150','120'],a:1,e:'12 × 15 = 180 square feet.'},
+  {q:'A seller wants to NET $188,000 after paying a 6% commission. Sale price must be:',o:['$199,280','$200,000','$188,000','$176,720'],a:1,e:'Net = price × (1 − 0.06). Price = $188,000 ÷ 0.94 = $200,000.'}
+ ],
+ 11:[
+  {q:'In Georgia the security instrument is a:',o:['Mortgage','Security deed','Land contract','Trust deed'],a:1,e:'GA is a title-theory state and uses a Security Deed; the lender holds title until paid.'},
+  {q:'GREC is composed of:',o:['9 commissioners','6 (5 RE + 1 consumer)','3 attorneys','12 elected members'],a:1,e:'6 commissioners total — 5 real estate professionals + 1 consumer member.'},
+  {q:'Max payout from the GA Recovery Fund per claim:',o:['$10,000','$25,000','$50,000','$75,000'],a:1,e:'$25,000 per claim, $75,000 aggregate per licensee.'},
+  {q:'BRRETA governs:',o:['Disclosures','Brokerage relationships & agency','Mortgage rates','Renewals'],a:1,e:'Brokerage Relationships in Real Estate Transactions Act — GA agency law.'},
+  {q:'GA CE is required every:',o:['1 year','2 years','4 years (36 hrs)','Never'],a:2,e:'Renew every 4 years with 36 hrs CE, plus 25 hrs post-license in year one.'},
+  {q:'GA pre-license education for salesperson is:',o:['40 hours','60 hours','75 hours','90 hours'],a:2,e:'Georgia requires a 75-hour salesperson pre-license course.'},
+  {q:'A GA salesperson must place their license under a:',o:['Title company','Sponsoring/qualifying broker','Lender','The GREC'],a:1,e:'Salespersons must work under a sponsoring broker; they cannot operate independently.'},
+  {q:'New GA salespersons must complete post-license education within the first year of:',o:['12 hours','25 hours','36 hours','3 hours'],a:1,e:'25 hours of post-license education is required in the first year to keep the license active.'},
+  {q:'The minimum age to obtain a GA salesperson license is:',o:['16','18','21','25'],a:1,e:'You must be at least 18 years old.'},
+  {q:'GREC commissioners are appointed by the:',o:['Governor','President','Voters','Brokers'],a:0,e:'The Governor appoints GREC commissioners.'},
+  {q:'A title-theory state means:',o:['Borrower keeps title','Lender holds title until the debt is paid','The state holds title','Title is never transferred'],a:1,e:'In title theory, the lender holds legal title (via security deed) until the loan is repaid.'},
+  {q:'The GA Recovery Fund exists to:',o:['Pay commissions','Reimburse consumers harmed by licensee misconduct','Fund GREC salaries','Lower license fees'],a:1,e:'It compensates consumers who suffer monetary loss from a licensee\u2019s wrongful act.'},
+  {q:'Which is required to ACTIVATE a GA license after passing the exam?',o:['Nothing','Affiliation with a broker + application','A second exam','Two years experience'],a:1,e:'You must apply and affiliate with a sponsoring broker to hold an active license.'},
+  {q:'GREC has the authority to:',o:['Set interest rates','License, regulate, and discipline licensees','Approve loans','Set home prices'],a:1,e:'GREC licenses, regulates, and disciplines Georgia real estate licensees.'},
+  {q:'A license that is issued but not affiliated with a broker is:',o:['Active','Inactive','Revoked','Reciprocal'],a:1,e:'Without a sponsoring broker the license is inactive — you cannot practice.'},
+  {q:'BRRETA requires that an agency relationship be created by:',o:['A handshake','A written brokerage engagement','Implied conduct','A phone call'],a:1,e:'BRRETA requires a written brokerage engagement to establish agency in Georgia.'}
+ ],
+ 12:[
+  {q:'Earnest money in GA must be:',o:['Deposited within 24 hrs','In any account','In a trust/escrow account within a reasonable time','In the agent\u2019s account'],a:2,e:'Hold in a trust/escrow account within a reasonable time per brokerage policy. Never commingle.'},
+  {q:'GA transfer tax rate:',o:['$1 per $500','$1 per $1,000','$2 per $1,000','$1 per $100'],a:1,e:'$1.00 per $1,000 of consideration, usually paid by the seller.'},
+  {q:'GA intangible tax on a new $200,000 loan:',o:['$200','$600','$300','$1,200'],a:1,e:'$1.50 per $500 of loan. $200,000 ÷ $500 = 400; × $1.50 = $600.'},
+  {q:'GA closings are typically conducted by:',o:['Agents','Title companies','An attorney','Lenders'],a:2,e:'Georgia is an attorney state — closings are attorney-conducted.'},
+  {q:'BRRETA requires agency be created by:',o:['Verbal agreement','A written brokerage engagement','Implied conduct','A handshake'],a:1,e:'BRRETA requires a written brokerage engagement.'},
+  {q:'Mixing client trust funds with the broker\u2019s own money is:',o:['Allowed','Commingling (prohibited)','Required','Escrow'],a:1,e:'Commingling client and broker funds is a serious violation.'},
+  {q:'The GA Seller\u2019s Property Disclosure Statement is meant to disclose:',o:['The asking price','Known material defects','The agent\u2019s commission','The buyer\u2019s finances'],a:1,e:'Sellers disclose known material conditions/defects of the property.'},
+  {q:'Intangible tax in GA is paid on:',o:['The sale price','New loan amounts','Cash purchases','Assumed loans'],a:1,e:'Intangible recording tax applies to new long-term notes (loans), not cash deals.'},
+  {q:'Who customarily pays the GA transfer tax?',o:['Buyer','Seller','Lender','Agent'],a:1,e:'The seller customarily pays the real estate transfer tax in Georgia.'},
+  {q:'A broker\u2019s trust account is subject to:',o:['No oversight','GREC audit','IRS approval','Buyer review'],a:1,e:'GREC may audit a broker\u2019s trust/escrow account for compliance.'},
+  {q:'In GA, a dual agency arrangement requires:',o:['No disclosure','Written informed consent of both parties','Only seller consent','Court approval'],a:1,e:'Dual agency requires written informed consent from both buyer and seller.'},
+  {q:'If a buyer defaults, the earnest money is typically handled per:',o:['Agent\u2019s choice','The contract terms','GREC order','Buyer\u2019s request'],a:1,e:'Disbursement follows the purchase contract\u2019s terms (often liquidated damages).'},
+  {q:'A licensee who collects an unearned referral fee may face:',o:['A bonus','GREC disciplinary action','A tax credit','Nothing'],a:1,e:'Improper/unearned fees violate license law and can bring discipline.'},
+  {q:'GA security deed transfers title to:',o:['The buyer','The lender until the loan is paid','The state','The agent'],a:1,e:'The security deed conveys title to the lender as security until repayment.'},
+  {q:'Converting client trust funds to personal use is:',o:['Commingling','Conversion (more serious; can be theft)','Escrow','Proration'],a:1,e:'Conversion is using client funds for personal purposes — a severe violation/crime.'},
+  {q:'A material defect a seller knows about but hides may lead to:',o:['No consequences','Liability and possible license action','A higher price guaranteed','A tax benefit'],a:1,e:'Concealing known material defects can create legal liability and disciplinary action.'}
+ ]
+};
+
+const FLASHCARDS = [
+ ['Agency','OLD CAR','Fiduciary duties: Obedience, Loyalty, Disclosure, Confidentiality, Accountability, Reasonable care'],
+ ['Agency','Single Agency','Broker represents ONLY one party (buyer OR seller).'],
+ ['Agency','Dual Agency','Broker represents BOTH. Requires written disclosure + consent in GA.'],
+ ['Agency','Designated Agency','Different agents in one brokerage represent buyer and seller separately.'],
+ ['Agency','Exclusive Right to Sell','Broker is paid no matter who sells — even the owner. Best for broker.'],
+ ['Agency','Net Listing','Seller sets a net; broker keeps excess. Illegal in many states — conflict of interest.'],
+ ['Contracts','COCAL','Valid contract: Competent parties, Offer/acceptance, Consideration, Agreement, Legal purpose.'],
+ ['Contracts','Statute of Frauds','RE contracts (and most over 1 yr) must be in writing to be enforceable.'],
+ ['Contracts','Void vs Voidable','Void = never legal. Voidable = one party may cancel (minor, fraud).'],
+ ['Contracts','Liquidated Damages','Pre-agreed damages (usually earnest money) if the buyer defaults.'],
+ ['Contracts','Specific Performance','Court orders the breaching party to perform (complete the sale).'],
+ ['Property','Bundle of Rights (DEEP-PIE)','Disposition, Encumbrance, Enjoyment, Possession, Income, Exclusion.'],
+ ['Property','Fixture Tests (MARIA)','Method, Adaptability, Relationship, Intention, Agreement.'],
+ ['Property','Joint Tenancy (PITT)','Possession, Interest, Time, Title + right of survivorship.'],
+ ['Property','Tenancy in Common','Default co-ownership. NO survivorship. Shares may be unequal.'],
+ ['Property','Fee Simple Absolute','Most complete ownership. No conditions. Inheritable.'],
+ ['Property','Life Estate','Lasts for a life; then reverts (reversion) or passes to a third party (remainder).'],
+ ['Land Use','PETE','Police power, Eminent domain, Taxation, Escheat.'],
+ ['Land Use','Easement Appurtenant','Attaches to land; dominant + servient tenements; runs with the land.'],
+ ['Land Use','Easement in Gross','Personal/commercial (utilities). No dominant tenement.'],
+ ['Land Use','Encroachment','Physical intrusion onto another\u2019s land. Found by survey. Not an easement.'],
+ ['Land Use','General vs Specific Lien','General = all debtor property (judgment, IRS). Specific = one property (mortgage, tax).'],
+ ['Financing','TRID 3-7-3','LE within 3 days; 7 days to closing; 3-day CD review.'],
+ ['Financing','RESPA','Bans kickbacks; requires Loan Estimate & Closing Disclosure.'],
+ ['Financing','ECOA','No lending discrimination by race, color, religion, national origin, sex, marital status, age, public assistance.'],
+ ['Financing','Acceleration Clause','Lender can demand full balance upon default. Standard in all mortgages.'],
+ ['Financing','Alienation (Due-on-Sale)','Loan paid off if property sold; prevents assumption.'],
+ ['Financing','Defeasance Clause','When loan is paid, lien is released.'],
+ ['Financing','FHA Loan','Min 3.5% down (580+). MIP required. Insures the lender.'],
+ ['Financing','VA Loan','0% down for qualified vets. No PMI. Funding fee. VA-guaranteed.'],
+ ['Financing','Discount Points','1 point = 1% of LOAN amount. Each ≈ 0.25% rate reduction.'],
+ ['Fair Housing','7 Protected Classes','Race, Color, Religion, National Origin, Sex, Familial Status, Disability.'],
+ ['Fair Housing','Race (CRA 1866)','No exemptions for race discrimination, ever.'],
+ ['Fair Housing','Steering','Directing buyers by protected class. Illegal.'],
+ ['Fair Housing','Blockbusting','Inducing panic selling. Illegal.'],
+ ['Fair Housing','Redlining','Denying loans/insurance by neighborhood demographics. Illegal.'],
+ ['Valuation','DUST','Demand, Utility, Scarcity, Transferability.'],
+ ['Valuation','Sales Comparison','Best for residential — uses comparable recent sales.'],
+ ['Valuation','Cost Approach','Best for new/unique. Land + (Reproduction Cost − Depreciation).'],
+ ['Valuation','Income Approach','Best for rentals. V = NOI ÷ Cap Rate.'],
+ ['Valuation','Depreciation Types','Physical (wear), Functional (outdated), Economic/External (neighborhood).'],
+ ['Math','T-Method','Part = Whole × Rate. Rate = Part ÷ Whole. Whole = Part ÷ Rate.'],
+ ['Math','1 Acre','43,560 square feet.'],
+ ['Math','Cap Rate','Cap = NOI ÷ Value. Value = NOI ÷ Cap.'],
+ ['Math','LTV','Loan ÷ Value × 100. Over 80% conventional usually needs PMI.'],
+ ['Math','Proration (360)','Banker\u2019s method: 360 days, 30-day months. Daily = annual ÷ 360.'],
+ ['GA Law','GA = Title Theory','Uses a SECURITY DEED, not a mortgage. Lender holds title until paid.'],
+ ['GA Law','GREC','6 commissioners (5 RE + 1 consumer). Regulates GA real estate.'],
+ ['GA Law','BRRETA','GA agency law. Requires a written brokerage engagement.'],
+ ['GA Law','License Renewal','Every 4 years, 36 hrs CE; 25 hrs post-license in year one.'],
+ ['GA Law','Recovery Fund','$25,000 per claim, $75,000 aggregate per licensee.'],
+ ['GA Law','Transfer Tax','$1 per $1,000 of consideration. Usually the seller.'],
+ ['GA Law','Intangible Tax','$1.50 per $500 of loan amount. Buyer, on new loans only.'],
+ ['GA Law','Trust Account','Earnest money held timely; never commingled; GREC may audit.'],
+ ['GA Law','GA Closing','Attorney state — closings conducted by an attorney.']
+];
+
+const EXAM = [
+ ['Contracts',17,17,'CRITICAL'],['Agency',13,13,'CRITICAL'],['Practice of RE',12,12,'HIGH'],
+ ['Property Ownership',10,10,'HIGH'],['Financing',10,10,'HIGH'],['Valuation',8,8,'MEDIUM'],
+ ['Real Estate Math',7,7,'MEDIUM'],['Property Disclosures',7,7,'MEDIUM'],['Transfer of Title',6,6,'MEDIUM'],
+ ['Land Use Controls',5,5,'LOWER'],['Property Management',5,5,'LOWER']
+];
+
+const FORMULAS = [
+ ['T-Method','Part = Whole × Rate','Cover the unknown. Rate: Part÷Whole. Whole: Part÷Rate.'],
+ ['Area of Rectangle','Length × Width','Most lot questions. Watch sq ft vs acres.'],
+ ['Acres','1 acre = 43,560 sq ft','MEMORIZE. sq ft ÷ 43,560 = acres.'],
+ ['Area of Triangle','½ × Base × Height','For triangular lots. Don\u2019t forget the ½.'],
+ ['Commission','Sale Price × Commission %','Watch brokerage splits, then broker/agent split.'],
+ ['LTV','Loan ÷ Value × 100','Over 80% conventional usually needs PMI.'],
+ ['Discount Points','1 point = 1% of LOAN','Not the sale price. Each ≈ 0.25% rate drop.'],
+ ['Property Tax','Assessed Value × Tax Rate','Watch mills (1 mill = $0.001) vs percent.'],
+ ['Proration (360)','Annual ÷ 360 = daily rate','Banker\u2019s method, 30-day months.'],
+ ['Cap Rate','NOI ÷ Value','Value = NOI ÷ Cap. Income approach core.'],
+ ['NOI','Effective Gross Income − Operating Expenses','Excludes debt service & income tax.'],
+ ['GRM','Sale Price ÷ Monthly Gross Rent','Higher GRM = pricier vs rent.'],
+ ['Equity','Market Value − Loan Balance','Watch current value vs purchase price.'],
+ ['GA Transfer Tax','$1 per $1,000 of sale price','Round up to nearest $1,000. Usually seller.'],
+ ['GA Intangible Tax','$1.50 per $500 of LOAN','New loans only. Buyer pays.']
+];
+
+/* ============================ STATE ============================ */
+const KEY='ga-re-study-v2';
+let S={progress:{},answers:{},submitted:{},examDate:null,mock:null};
+try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw));}catch(e){}
+// migrate old v1 data if present
+try{const old=localStorage.getItem('ga-re-study-v1');if(old&&!localStorage.getItem(KEY)){const o=JSON.parse(old);S.progress=o.progress||{};S.answers=o.answers||{};S.submitted=o.submitted||{};}}catch(e){}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+let tab='overview', day=1, fcTopic='all', fcIdx=0, fcFlip=false;
+let missIdx=0, missShow=false;
+
+/* ============================ HELPERS ============================ */
+const $=s=>document.querySelector(s);
+const esc=t=>String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const totalTasks=PLAN.reduce((a,d)=>a+d.tasks.length,0);
+function doneCount(){return Object.values(S.progress).filter(Boolean).length;}
+function dayPct(n){const d=PLAN.find(x=>x.day===n);const c=d.tasks.filter((_,i)=>S.progress['d'+n+'t'+i]).length;return Math.round(c/d.tasks.length*100);}
+function quizScore(n){const q=QUIZZES[n];if(!q||!S.submitted['q'+n])return null;let c=0;q.forEach((it,i)=>{if(S.answers['q'+n+'_'+i]===it.a)c++;});return Math.round(c/q.length*100);}
+function priColor(p){return p==='CRITICAL'?'var(--gold)':p==='HIGH'?'var(--copper)':p==='MEDIUM'?'var(--gold-dim)':'var(--gold-deep)';}
+function priFill(p){return p==='CRITICAL'?'linear-gradient(90deg,#8b3a1f,#c97e3f)':p==='HIGH'?'linear-gradient(90deg,#6b2d18,#a8623a)':p==='MEDIUM'?'linear-gradient(90deg,#4a2818,#8b5a3c)':'#4a2818';}
+
+// maps each quiz day to its main topic (for the weak-topic tracker)
+const DAY_TOPIC={1:'Property Basics',2:'Estates & Ownership',3:'Land Use',4:'Agency',5:'Contracts',6:'Financing',7:'Mixed Review',8:'Valuation',9:'Fair Housing',10:'Math',11:'GA Law I',12:'GA Law II'};
+
+// every question the user answered WRONG on a submitted quiz
+function missedList(){
+  const out=[];
+  for(const k in QUIZZES){
+    if(!S.submitted['q'+k])continue;
+    QUIZZES[k].forEach((it,i)=>{
+      const ans=S.answers['q'+k+'_'+i];
+      if(ans!==undefined && ans!==it.a){
+        out.push({day:+k,topic:DAY_TOPIC[k]||('Day '+k),q:it.q,o:it.o,a:it.a,e:it.e,your:ans});
+      }
+    });
+  }
+  return out;
+}
+
+// per-topic score from submitted quizzes
+function topicStats(){
+  const m={};
+  for(const k in QUIZZES){
+    if(!S.submitted['q'+k])continue;
+    const t=DAY_TOPIC[k]||('Day '+k);
+    let c=0;QUIZZES[k].forEach((it,i)=>{if(S.answers['q'+k+'_'+i]===it.a)c++;});
+    if(!m[t])m[t]={correct:0,total:0};
+    m[t].correct+=c;m[t].total+=QUIZZES[k].length;
+  }
+  return Object.keys(m).map(t=>({topic:t,pct:Math.round(m[t].correct/m[t].total*100),correct:m[t].correct,total:m[t].total})).sort((a,b)=>a.pct-b.pct);
+}
+
+// days remaining until the user's exam date (null if not set)
+function daysUntilExam(){
+  if(!S.examDate)return null;
+  const exam=new Date(S.examDate+'T00:00:00');
+  const now=new Date();now.setHours(0,0,0,0);
+  return Math.round((exam-now)/(1000*60*60*24));
+}
+
+// ---- Mock exam: pull a balanced 50-question set from all quiz banks ----
+function buildMock(){
+  const pool=[];
+  for(const k in QUIZZES){QUIZZES[k].forEach((it,i)=>pool.push({day:+k,qi:i,topic:DAY_TOPIC[k]||('Day '+k),q:it.q,o:it.o,a:it.a,e:it.e}));}
+  // shuffle (Fisher-Yates)
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+  return pool.slice(0,50);
+}
+
+function updateHeader(){
+  const d=doneCount(),p=Math.round(d/totalTasks*100);
+  $('#ovText').textContent=d+' / '+totalTasks+' · '+p+'%';
+  $('#ovBar').style.width=p+'%';
+}
+
+/* ============================ TABS ============================ */
+const TABS=[['overview','Exam Map'],['plan','Daily Plan'],['review','Review'],['mock','Mock Exam'],['flashcards','Flashcards'],['formulas','Formulas'],['tips','Test Day']];
+function renderTabs(){
+  $('#tabs').innerHTML=TABS.map(([id,label])=>{
+    let badge='';
+    if(id==='review'){const n=missedList().length;if(n>0)badge=`<span class="tabbadge">${n}</span>`;}
+    return `<button class="tab sans${tab===id?' on':''}" data-tab="${id}">${label}${badge}</button>`;
+  }).join('');
+  document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;render();});
+}
+
+/* ============================ VIEWS ============================ */
+function viewOverview(){
+  const dleft=daysUntilExam();
+  let h='<div class="fade">';
+  // countdown / date setter
+  if(dleft===null){
+    h+='<div class="countdown set"><div><div class="cd-label sans">SET YOUR EXAM DATE</div><div class="cd-sub sans">Add it to start your countdown and stay accountable.</div></div><input type="date" id="examInput" class="cd-input sans"></div>';
+  }else{
+    const urgent=dleft<=3;
+    h+=`<div class="countdown${urgent?' urgent':''}"><div><div class="cd-big">${dleft<0?'Exam day passed':dleft===0?'EXAM IS TODAY':dleft+' day'+(dleft===1?'':'s')}</div><div class="cd-label sans">${dleft<0?'Hope you crushed it':'until your exam · '+S.examDate}</div></div><button class="cd-edit sans" id="examEdit">Change</button></div>`;
+  }
+  const stats=[['Total Questions','152','100 National + 52 GA'],['Time Limit','4 hours','PSI testing center'],['Passing Score','75%','on EACH portion'],['Exam Fee','$121','plus $170 license fee']];
+  h+='<div class="stat-grid">';
+  h+=stats.map(s=>`<div class="stat"><div class="k sans">${s[0]}</div><div class="v">${s[1]}</div><div class="s">${s[2]}</div></div>`).join('');
+  h+='</div>';
+  h+='<h2>National Portion <small class="sans">· 100 QUESTIONS · 75 TO PASS</small></h2>';
+  h+='<p class="lead">Topic weights from the PSI Georgia content outline. Spend your time proportionally.</p><div class="bars">';
+  h+=EXAM.map(([t,pct,q,pri])=>`<div class="row"><div class="name">${t}</div><div class="track"><i style="width:${pct*4}%;background:${priFill(pri)}"></i><b class="sans">${pct}% · ${q}q</b></div><div class="pri sans" style="color:${priColor(pri)}">${pri}</div></div>`).join('');
+  h+='</div>';
+  h+='<h2 style="margin-top:46px">Georgia Portion <small class="sans">· 52 QUESTIONS · 39 TO PASS</small></h2><div class="ga-grid">';
+  h+='<div><div class="h sans">LICENSE LAW (≈30%)</div><ul><li>GREC structure & authority</li><li>License requirements</li><li>BRRETA (agency law)</li><li>Unfair trade practices</li></ul></div>';
+  h+='<div><div class="h sans">BROKERAGE PRACTICE (≈40%)</div><ul><li>Trust accounts</li><li>Agency disclosures</li><li>Sales contracts (GAR forms)</li><li>Property disclosures</li></ul></div>';
+  h+='<div><div class="h sans">CLOSING & FINANCE (≈30%)</div><ul><li>Security deed (title theory)</li><li>Transfer tax ($1/$1,000)</li><li>Intangible tax ($1.50/$500)</li><li>Attorney closing</li></ul></div>';
+  h+='</div></div>';
+  return h;
+}
+
+function viewPlan(){
+  let h='<div class="fade"><div class="days">';
+  h+=PLAN.map(d=>{const p=dayPct(d.day);return `<button class="daybtn${day===d.day?' on':''}${p===100?' done':''}" data-day="${d.day}"><div class="dl sans">DAY</div><div class="dn">${d.day}</div>${p===100?'<div class="chk">✓</div>':''}<div class="mini"><i style="width:${p}%"></i></div></button>`;}).join('');
+  h+='</div>';
+  const d=PLAN.find(x=>x.day===day);
+  h+=`<div class="dhero"><div class="top"><div><div class="wk sans">Week ${d.week} · Day ${d.day}</div><h3>${d.title}</h3><div class="focus">${d.focus}</div></div><div class="pct"><div class="pl sans">PROGRESS</div><div class="pv">${dayPct(d.day)}%</div></div></div><div class="chips">${d.topics.map(t=>`<span class="chip sans">${t}</span>`).join('')}</div></div>`;
+  // tasks
+  h+='<div class="panel"><div class="hd sans">Today\u2019s Tasks</div>';
+  h+=d.tasks.map((t,i)=>{const on=S.progress['d'+d.day+'t'+i];return `<button class="task${on?' done':''}" data-task="${i}"><span class="box"></span><span class="txt">${esc(t)}</span></button>`;}).join('');
+  h+='</div>';
+  // quiz
+  const quiz=QUIZZES[d.day];
+  if(quiz){
+    const sub=S.submitted['q'+d.day], sc=quizScore(d.day);
+    h+='<div class="panel"><div class="hd sans"><span>Day '+d.day+' Mini-Quiz · '+quiz.length+' questions</span>'+(sub&&sc!==null?`<span class="score ${sc>=75?'pass':'fail'}">Score ${sc}% ${sc>=75?'✓ PASSING':'— retake'}</span>`:'')+'</div><div style="padding:22px">';
+    quiz.forEach((it,qi)=>{
+      h+='<div class="q"><div class="stem"><b>'+(qi+1)+'.</b>'+esc(it.q)+'</div>';
+      it.o.forEach((op,oi)=>{
+        const sel=S.answers['q'+d.day+'_'+qi]===oi;
+        let cls='opt';
+        if(sub){if(oi===it.a)cls+=' correct';else if(sel)cls+=' wrong';}
+        else if(sel)cls+=' sel';
+        h+=`<button class="${cls}" data-q="${qi}" data-o="${oi}"${sub?' disabled':''}><span class="ltr">${String.fromCharCode(65+oi)}.</span>${esc(op)}</button>`;
+      });
+      if(sub)h+='<div class="explain"><b>Why:</b> '+esc(it.e)+'</div>';
+      h+='</div>';
+    });
+    if(!sub){
+      const all=quiz.every((_,qi)=>S.answers['q'+d.day+'_'+qi]!==undefined);
+      h+=`<button class="submit sans" id="submitQuiz"${all?'':' disabled'}>Submit Quiz</button>`;
+    }
+    h+='</div></div>';
+  }
+  // nav
+  h+='<div class="dnav">';
+  if(day>1)h+=`<button class="sans" data-go="${day-1}">‹ Day ${day-1}</button>`;
+  if(day<14)h+=`<button class="sans next" data-go="${day+1}">Day ${day+1} ›</button>`;
+  h+='</div></div>';
+  return h;
+}
+
+function viewFlashcards(){
+  const topics=['all',...new Set(FLASHCARDS.map(f=>f[0]))];
+  const list=fcTopic==='all'?FLASHCARDS:FLASHCARDS.filter(f=>f[0]===fcTopic);
+  if(fcIdx>=list.length)fcIdx=0;
+  const c=list[fcIdx];
+  let h='<div class="fade"><h2>Flashcards</h2><p class="lead">'+list.length+' cards · the most-tested concepts, condensed.</p>';
+  h+='<div class="fc-topics">'+topics.map(t=>`<button class="fc-topic${fcTopic===t?' on':''}" data-fct="${t}">${t}</button>`).join('')+'</div>';
+  h+=`<div class="card${fcFlip?' flip':''}" id="card"><div class="meta sans">${c[0]} · ${fcIdx+1}/${list.length}</div><div class="side sans">${fcFlip?'Answer':'Term'}</div><div class="${fcFlip?'back':'front'}">${esc(fcFlip?c[2]:c[1])}</div><div class="hint sans">Tap to flip</div></div>`;
+  h+='<div class="fc-nav"><button class="sans" id="fcPrev"'+(fcIdx===0?' disabled':'')+'>‹ Prev</button><button class="sans flip" id="fcFlip">Flip</button><button class="sans" id="fcNext"'+(fcIdx===list.length-1?' disabled':'')+'>Next ›</button></div></div>';
+  return h;
+}
+
+function viewFormulas(){
+  let h='<div class="fade"><h2>Math & Formula Reference</h2><p class="lead">Memorize these cold. Math is only 7% of the exam — but it\u2019s the easiest 7% if you know the formulas.</p><div class="f-grid">';
+  h+=FORMULAS.map(f=>`<div class="f-card"><div class="ft sans">${f[0]}</div><div class="ff">${esc(f[1])}</div><div class="fn sans">${esc(f[2])}</div></div>`).join('');
+  h+='</div></div>';
+  return h;
+}
+
+function viewTips(){
+  const cards=[
+   ['⚡','Before You Go',['Sleep 8 hours the night before','Bring 2 forms of valid ID (1 government photo)','GCIC criminal history report (within 60 days)','Arrive 30 minutes early to the PSI center','Eat a real meal (protein + slow carbs)','No electronics inside the testing room']],
+   ['◷','Time Strategy',['4 hours total = ~95 seconds per question','First pass: answer everything you know','Flag what you skip — never leave blank','Second pass: tackle math calmly','Third pass: review flagged questions','Don\u2019t second-guess — first instinct usually wins']],
+   ['◆','Question Strategy',['Read EVERY choice before picking','Watch for EXCEPT, NOT, BEST, MOST LIKELY','Eliminate clearly wrong answers first','"Always"/"never" answers are usually wrong','The most specific answer is often correct','If two seem right, pick the more complete one']],
+   ['!','Watch Out For',['Math with extra info you don\u2019t need','Discount points = % of LOAN, not sale price','Federal vs Georgia-specific laws','"Mortgage" tricks — GA uses a Security Deed','Fiduciary questions: who is the client?','Fair housing exemptions — race has NONE']]
+  ];
+  let h='<div class="fade"><h2>Test Day Playbook</h2><p class="lead">Strategy alone can swing your score 5–10 points.</p><div class="tip-grid">';
+  h+=cards.map(c=>`<div class="tip"><h4><span class="ic">${c[0]}</span>${c[1]}</h4><ul>${c[2].map(x=>`<li class="sans">${esc(x)}</li>`).join('')}</ul></div>`).join('');
+  h+='</div>';
+  h+='<div class="callout"><h4>🏆 What 80%+ on Kaplan Practice Actually Means</h4><p>Kaplan practice exams run <em>harder</em> than the real PSI exam. If you consistently hit 80%+ on full-length Kaplan tests, you\u2019re in a strong spot to pass first try. Key word: <em>consistent</em> — aim for 80%+ on TWO separate practice exams before you schedule.</p></div>';
+  h+='<div class="note"><h4 class="sans">If You Don\u2019t Pass</h4><p>Don\u2019t panic. You only retake the portion you failed, and PSI lets you reschedule the next day. Your score report flags weak topics — focus there. Most serious studiers pass within 1–2 attempts.</p></div></div>';
+  return h;
+}
+
+function viewReview(){
+  const missed=missedList();
+  const stats=topicStats();
+  let h='<div class="fade"><h2>Review & Weak Spots</h2><p class="lead">Every question you missed lands here. Master these and your score climbs fastest.</p>';
+
+  // weak-topic tracker
+  if(stats.length){
+    h+='<div class="panel"><div class="hd sans">Your Topic Scores</div><div style="padding:18px 22px">';
+    stats.forEach(s=>{
+      const col=s.pct>=80?'var(--gold)':s.pct>=70?'var(--copper)':'#c0563a';
+      h+=`<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>${s.topic}</span><span class="sans" style="color:${col}">${s.pct}% (${s.correct}/${s.total})</span></div><div style="height:8px;background:var(--bg);border:1px solid var(--line);overflow:hidden"><i style="display:block;height:100%;width:${s.pct}%;background:${col}"></i></div></div>`;
+    });
+    const weakest=stats[0];
+    if(weakest&&weakest.pct<80)h+=`<div style="margin-top:8px;padding:12px 14px;background:var(--bg);border-left:3px solid var(--copper);font-size:13px;color:var(--gold-dim)"><b style="color:var(--gold)">Focus here:</b> Your lowest topic is <b style="color:var(--paper)">${weakest.topic}</b> at ${weakest.pct}%. Re-drill it before exam day.</div>`;
+    h+='</div></div>';
+  }else{
+    h+='<div class="panel"><div style="padding:26px;text-align:center;color:var(--gold-dim)">Take some daily quizzes first — your topic scores and missed questions will appear here.</div></div>';
+  }
+
+  // missed questions review
+  if(missed.length){
+    if(missIdx>=missed.length)missIdx=0;
+    const m=missed[missIdx];
+    h+=`<div class="panel"><div class="hd sans"><span>Missed Questions · ${missIdx+1} of ${missed.length}</span><span class="score" style="color:var(--copper)">${m.topic}</span></div><div style="padding:22px">`;
+    h+=`<div class="q"><div class="stem">${esc(m.q)}</div>`;
+    m.o.forEach((op,oi)=>{
+      let cls='opt';
+      if(oi===m.a)cls+=' correct';
+      else if(oi===m.your)cls+=' wrong';
+      h+=`<div class="${cls}"><span class="ltr">${String.fromCharCode(65+oi)}.</span>${esc(op)}${oi===m.a?' <span class="sans" style="color:var(--gold);font-size:11px">✓ correct</span>':oi===m.your?' <span class="sans" style="color:var(--copper);font-size:11px">your pick</span>':''}</div>`;
+    });
+    h+=`<div class="explain"><b>Why:</b> ${esc(m.e)}</div></div>`;
+    h+='<div class="fc-nav"><button class="sans" id="missPrev"'+(missIdx===0?' disabled':'')+'>‹ Prev</button><button class="sans" id="missDay">Go to Day '+m.day+'</button><button class="sans flip" id="missNext"'+(missIdx===missed.length-1?' disabled':'')+'>Next ›</button></div>';
+    h+='</div></div>';
+  }else if(stats.length){
+    h+='<div class="panel"><div style="padding:26px;text-align:center;color:var(--gold)">🎉 No missed questions right now — nice work! Keep taking quizzes to stress-test yourself.</div></div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+function viewMock(){
+  let h='<div class="fade"><h2>Mock Exam</h2><p class="lead">A timed, 50-question mixed exam pulled from all topics — to build pacing and stamina for the real 4-hour PSI test.</p>';
+  const mk=S.mock;
+  if(!mk||mk.done&&mk.review===undefined){
+    // intro / results screen
+    if(mk&&mk.done){
+      const pct=Math.round(mk.correct/mk.questions.length*100);
+      const pass=pct>=75;
+      h+=`<div class="panel"><div style="padding:30px;text-align:center"><div class="sans" style="font-size:11px;letter-spacing:.2em;color:var(--gold-dim)">LAST MOCK SCORE</div><div style="font-size:60px;color:${pass?'var(--gold)':'var(--copper)'};line-height:1.1">${pct}%</div><div class="sans" style="color:var(--gold-dim);margin-bottom:6px">${mk.correct} of ${mk.questions.length} correct · ${Math.floor(mk.elapsed/60)}m ${mk.elapsed%60}s</div><div style="color:${pass?'var(--gold)':'var(--copper)'};font-size:15px">${pass?'✓ Above the 75% pass line — strong work':'Below 75% — keep drilling, you\u2019ll get there'}</div></div></div>`;
+      h+='<div class="dnav"><button class="sans" id="mockReview">Review Answers</button><button class="sans flip" id="mockStart">New Mock Exam</button></div>';
+    }else{
+      h+='<div class="panel"><div style="padding:30px;text-align:center"><div style="font-size:15px;margin-bottom:8px">Ready when you are.</div><div class="sans" style="color:var(--gold-dim);font-size:13px;line-height:1.7">50 questions · ~45 min target<br>Pick your answers, then submit to see your score + explanations.<br>Tip: pace yourself at ~55 seconds per question.</div></div></div>';
+      h+='<div class="dnav"><button class="sans flip" id="mockStart">Start Mock Exam</button></div>';
+    }
+    h+='</div>';return h;
+  }
+  // review mode of a finished mock
+  if(mk.done&&mk.review){
+    h+='<div class="panel"><div class="hd sans"><span>Mock Review · '+mk.questions.length+' questions</span><span class="score" style="color:var(--gold-dim)">Score '+Math.round(mk.correct/mk.questions.length*100)+'%</span></div><div style="padding:22px">';
+    mk.questions.forEach((it,i)=>{
+      const your=mk.answers[i];
+      h+='<div class="q"><div class="stem"><b>'+(i+1)+'.</b>'+esc(it.q)+' <span class="sans" style="font-size:10px;color:var(--gold-deep)">['+it.topic+']</span></div>';
+      it.o.forEach((op,oi)=>{
+        let cls='opt';
+        if(oi===it.a)cls+=' correct';else if(oi===your&&your!==it.a)cls+=' wrong';
+        h+=`<div class="${cls}"><span class="ltr">${String.fromCharCode(65+oi)}.</span>${esc(op)}</div>`;
+      });
+      h+='<div class="explain"><b>Why:</b> '+esc(it.e)+'</div></div>';
+    });
+    h+='</div></div><div class="dnav"><button class="sans flip" id="mockStart">New Mock Exam</button></div></div>';
+    return h;
+  }
+  // in-progress exam
+  const answered=Object.keys(mk.answers).length;
+  h+=`<div class="mock-bar"><div class="sans">${answered} / ${mk.questions.length} answered</div><div class="sans" id="mockTimer">timing…</div></div>`;
+  h+='<div class="panel"><div style="padding:22px">';
+  mk.questions.forEach((it,i)=>{
+    h+='<div class="q"><div class="stem"><b>'+(i+1)+'.</b>'+esc(it.q)+'</div>';
+    it.o.forEach((op,oi)=>{
+      const sel=mk.answers[i]===oi;
+      h+=`<button class="opt${sel?' sel':''}" data-mock="${i}" data-mo="${oi}"><span class="ltr">${String.fromCharCode(65+oi)}.</span>${esc(op)}</button>`;
+    });
+    h+='</div>';
+  });
+  h+=`<button class="submit sans" id="mockSubmit"${answered<mk.questions.length?' disabled':''}>Submit Mock Exam (${answered}/${mk.questions.length})</button>`;
+  h+='</div></div></div>';
+  return h;
+}
+
+/* ============================ RENDER + EVENTS ============================ */
+function render(){
+  renderTabs();
+  let html='';
+  if(tab==='overview')html=viewOverview();
+  else if(tab==='plan')html=viewPlan();
+  else if(tab==='review')html=viewReview();
+  else if(tab==='mock')html=viewMock();
+  else if(tab==='flashcards')html=viewFlashcards();
+  else if(tab==='formulas')html=viewFormulas();
+  else if(tab==='tips')html=viewTips();
+  $('#view').innerHTML=html;
+  wire();
+  updateHeader();
+  startMockTimer();
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+let mockTimerId=null;
+function startMockTimer(){
+  if(mockTimerId){clearInterval(mockTimerId);mockTimerId=null;}
+  const el=$('#mockTimer');
+  if(!el||!S.mock||S.mock.done)return;
+  if(!S.mock.start)S.mock.start=Date.now();
+  const tick=()=>{
+    const t=$('#mockTimer');if(!t){clearInterval(mockTimerId);return;}
+    const s=Math.floor((Date.now()-S.mock.start)/1000);
+    const m=Math.floor(s/60),sec=s%60;
+    t.textContent=(m<10?'0':'')+m+':'+(sec<10?'0':'')+sec+' / 45:00 target';
+  };
+  tick();mockTimerId=setInterval(tick,1000);
+}
+
+function wire(){
+  // day buttons
+  document.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{day=+b.dataset.day;render();});
+  document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{day=+b.dataset.go;render();});
+  // tasks
+  document.querySelectorAll('[data-task]').forEach(b=>b.onclick=()=>{
+    const i=b.dataset.task;const k='d'+day+'t'+i;S.progress[k]=!S.progress[k];persist();render();
+  });
+  // quiz answers
+  document.querySelectorAll('[data-q]').forEach(b=>{if(b.disabled)return;b.onclick=()=>{
+    S.answers['q'+day+'_'+b.dataset.q]=+b.dataset.o;persist();render();
+  };});
+  const sq=$('#submitQuiz');if(sq)sq.onclick=()=>{S.submitted['q'+day]=true;persist();render();};
+  // flashcards
+  document.querySelectorAll('[data-fct]').forEach(b=>b.onclick=()=>{fcTopic=b.dataset.fct;fcIdx=0;fcFlip=false;render();});
+  const card=$('#card');if(card)card.onclick=()=>{fcFlip=!fcFlip;render();};
+  const fl=$('#fcFlip');if(fl)fl.onclick=e=>{e.stopPropagation();fcFlip=!fcFlip;render();};
+  const fp=$('#fcPrev');if(fp)fp.onclick=e=>{e.stopPropagation();if(fcIdx>0){fcIdx--;fcFlip=false;render();}};
+  const fn=$('#fcNext');if(fn)fn.onclick=e=>{e.stopPropagation();const list=fcTopic==='all'?FLASHCARDS:FLASHCARDS.filter(f=>f[0]===fcTopic);if(fcIdx<list.length-1){fcIdx++;fcFlip=false;render();}};
+
+  // exam date setter
+  const ei=$('#examInput');if(ei)ei.onchange=()=>{S.examDate=ei.value;persist();render();};
+  const ee=$('#examEdit');if(ee)ee.onclick=()=>{S.examDate=null;persist();render();};
+
+  // missed-questions review nav
+  const mp=$('#missPrev');if(mp)mp.onclick=()=>{if(missIdx>0){missIdx--;render();}};
+  const mn=$('#missNext');if(mn)mn.onclick=()=>{const n=missedList().length;if(missIdx<n-1){missIdx++;render();}};
+  const md=$('#missDay');if(md)md.onclick=()=>{const m=missedList()[missIdx];if(m){day=m.day;tab='plan';render();}};
+
+  // mock exam controls
+  const ms=$('#mockStart');if(ms)ms.onclick=()=>{S.mock={questions:buildMock(),answers:{},done:false,start:Date.now()};persist();render();};
+  const mr=$('#mockReview');if(mr)mr.onclick=()=>{S.mock.review=true;persist();render();};
+  document.querySelectorAll('[data-mock]').forEach(b=>b.onclick=()=>{
+    if(!S.mock||S.mock.done)return;
+    S.mock.answers[b.dataset.mock]=+b.dataset.mo;persist();render();
+  });
+  const msub=$('#mockSubmit');if(msub)msub.onclick=()=>{
+    let c=0;S.mock.questions.forEach((it,i)=>{if(S.mock.answers[i]===it.a)c++;});
+    S.mock.correct=c;S.mock.done=true;S.mock.review=undefined;
+    S.mock.elapsed=Math.floor((Date.now()-S.mock.start)/1000);
+    persist();render();
+  };
+}
+
+$('#resetBtn').onclick=()=>{if(confirm('Reset ALL progress? This cannot be undone.')){S={progress:{},answers:{},submitted:{}};persist();day=1;tab='overview';render();}};
+
+render();
+</script>
+</body>
+</html>
