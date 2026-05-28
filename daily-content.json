@@ -1,0 +1,35 @@
+name: Daily Study Reminder
+
+# Runs every day and sends that day's plan by email + SMS.
+on:
+  schedule:
+    # 11:00 UTC = 7:00 AM Eastern Daylight Time (Atlanta in summer).
+    # In winter (EST) this lands at 6:00 AM. Adjust the hour if you like.
+    # cron is: minute hour day month weekday
+    - cron: '0 11 * * *'
+  workflow_dispatch: {}   # lets you also run it manually from the Actions tab
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Send daily reminder
+        env:
+          GMAIL_USER:     ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASS: ${{ secrets.GMAIL_APP_PASS }}
+          TO_EMAIL:       ${{ secrets.TO_EMAIL }}
+          SMS_GATEWAY:    ${{ secrets.SMS_GATEWAY }}
+          START_DATE:     ${{ vars.START_DATE }}
+          APP_URL:        ${{ vars.APP_URL }}
+        run: node send-daily.js

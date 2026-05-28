@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#1a0f0a"/>
+  <rect x="56" y="56" width="400" height="400" rx="64" fill="none" stroke="#8b3a1f" stroke-width="8"/>
+  <!-- house / peach hybrid mark -->
+  <path d="M256 120 L380 230 L380 392 L132 392 L132 230 Z" fill="none" stroke="#d4a574" stroke-width="14" stroke-linejoin="round"/>
+  <path d="M132 230 L256 120 L380 230" fill="none" stroke="#d4a574" stroke-width="14" stroke-linejoin="round"/>
+  <rect x="222" y="300" width="68" height="92" fill="#c97e3f"/>
+  <text x="256" y="448" font-family="Georgia, serif" font-size="64" fill="#d4a574" text-anchor="middle" font-weight="bold">GA</text>
+</svg>
