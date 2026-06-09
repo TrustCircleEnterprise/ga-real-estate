@@ -198,6 +198,9 @@
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
   /* exam countdown */
+  .dual-cd{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px}
+  @media(max-width:680px){.dual-cd{grid-template-columns:1fr}}
+  .dual-cd .countdown{margin-bottom:0}
   .countdown{display:flex;justify-content:space-between;align-items:center;gap:14px;
     background:linear-gradient(135deg,var(--rust),var(--rust2));border:1px solid var(--gold);
     padding:20px 24px;margin-bottom:24px;flex-wrap:wrap}
@@ -236,7 +239,7 @@
 
 <header>
   <div class="wrap">
-    <div class="eyebrow"><div class="bar"></div><span class="sans" id="eyebrowText">Fourteen Days to License</span></div>
+    <div class="eyebrow"><div class="bar"></div><span class="sans" id="eyebrowText">Twenty-Eight Days to License</span></div>
     <h1>Georgia Real Estate <em>Salesperson</em> Exam</h1>
     <p class="sub sans">A guaranteed-progress plan. 152 questions, two portions, 4 hours, 75% to pass each. Built to the PSI content outline and your Kaplan schedule.</p>
     <div class="pbar-wrap">
@@ -295,9 +298,55 @@ const PLAN = [
   {day:13,week:2,title:'FULL MOCK EXAM',focus:'Simulate real test conditions',
    topics:['Full exam simulation'],
    tasks:['Take FULL 152-question Kaplan practice exam, TIMED (4 hrs, no breaks)','GOAL: 80% overall — 75%+ National, 75%+ GA','Use only an on-screen calculator (PSI provides one — no phone)','No notes, no books — exactly like test day','Review EVERY wrong answer — understand WHY','80%+ → you\u2019re ready, schedule the exam','75-79% → review weak topics tomorrow, schedule 3-4 days out','Below 75% → extend 3-5 days, redo Days 5, 9, 10, 11']},
-  {day:14,week:2,title:'Final Review & Exam Prep',focus:'Light review, mental prep',
-   topics:['Light review only','Mental prep'],
-   tasks:['Review flashcards — NO new material today','Re-read your "wrong answer" notes from Day 13','Practice 30 questions on your weakest topic only','Pack exam bag: 2 IDs, GCIC report, snack, water','Review PSI rules: arrive 30 min early, no electronics','Light dinner, NO heavy studying after 6pm','Sleep 8 hours — memory consolidates during sleep','Tomorrow: TRUST YOUR PREP. You put in the work.']}
+  {day:14,week:2,title:'Final Review & Foundation Check',focus:'Light review, mental prep — first 2 weeks done',
+   topics:['Light review','Foundation check'],
+   tasks:['Review flashcards — NO new material today','Re-read your "wrong answer" notes from Day 13','Practice 30 questions on your weakest topic only','Honestly score your readiness so far','Rest — your brain consolidates memory during downtime','Tomorrow: Week 3 begins — heavy review + Kaplan-proctored prep']},
+
+  // ============ WEEK 3: HEAVY REVIEW + KAPLAN-PROCTORED PREP ============
+  {day:15,week:3,title:'Weak Topic Deep-Dive #1',focus:'Attack your worst topic from the Review tab',
+   topics:['Targeted drilling','Concept rebuild'],
+   tasks:['Open the Review tab — look at your lowest-scoring topic','Re-read the Kaplan chapter for that topic ONLY','Re-do all flashcards in that section (use the daily flashcard shortcut)','Do 30 Kaplan practice questions on that topic — target 80%+','Re-take the daily quiz from that topic\u2019s day','Update your weak-topic notes']},
+  {day:16,week:3,title:'Weak Topic Deep-Dive #2',focus:'Attack your 2nd weakest topic',
+   topics:['Targeted drilling','Pattern recognition'],
+   tasks:['Open the Review tab — pick your 2nd weakest topic','Re-read the Kaplan chapter','Drill 30 questions on that topic','Re-take that topic\u2019s daily quiz — target 85%+','Memorize any acronym/list you keep missing','Watch the LEARN Exam Prep National Laws session if available']},
+  {day:17,week:3,title:'Contracts + Agency Power Day',focus:'Lock in the two biggest topics (30% of exam)',
+   topics:['Contracts (17%)','Agency (13%)'],
+   tasks:['Re-take the Day 4 (Agency) AND Day 5 (Contracts) quizzes','Target 90%+ on both — these are 30% of your score','Review OLD CAR + COCAL until automatic','Drill 25 Kaplan questions on Contracts','Drill 25 Kaplan questions on Agency','Flashcards: Agency + Contracts sections']},
+  {day:18,week:3,title:'Math Power Day',focus:'Drill calculations until automatic',
+   topics:['T-Method','Cap rate','Commission','Proration','GA taxes'],
+   tasks:['Re-take the Day 10 math quiz — target 90%+','Do 40 Kaplan math questions, timed (90 seconds each)','Practice GA transfer tax + intangible tax calculations','Memorize: 1 acre = 43,560 sq ft (still)','Review all formulas on the Formulas tab','If math is still under 75%, drill another 20']},
+  {day:19,week:3,title:'Full National Practice Exam',focus:'100-question simulation — National only',
+   topics:['Full National test'],
+   tasks:['Take a FULL 100-question Kaplan National practice exam, timed','Target: 80%+ (you should be improving from Week 1)','Score by topic — note any topic still under 75%','Review every wrong answer — write the WHY','Add any new weak topic to your hit list for tomorrow','Take a real break tonight — no studying after 7pm']},
+  {day:20,week:3,title:'Mock Exam Day (in-app)',focus:'Use the in-app Mock Exam tab',
+   topics:['Timed practice','Pacing'],
+   tasks:['Open the Mock Exam tab in the app — take a fresh 50-question mock','Pace yourself: 55 seconds per question','Review all answers + explanations after','If under 80%, take a 2nd mock — same day if you have energy','Update flashcards on anything you still miss','Sleep 8 hours']},
+  {day:21,week:3,title:'KAPLAN PROCTORED EXAM PREP',focus:'Day before your Kaplan proctored — light, calm',
+   topics:['Kaplan proctored exam tomorrow'],
+   tasks:['Tomorrow is your Kaplan proctored exam — treat today like exam-day rehearsal','Review flashcards only — NO new material','Re-read your "wrong answer" notes','Confirm your Kaplan proctored exam logistics (time, location/link, ID)','Light dinner, no studying after 6pm','Sleep 8 hours — you\u2019re ready for tomorrow']},
+
+  // ============ WEEK 4: PSI-SPECIFIC + GA LAW LOCK-IN ============
+  {day:22,week:4,title:'POST-KAPLAN DEBRIEF',focus:'Kaplan proctored done — analyze and refocus',
+   topics:['Score review','PSI prep begins'],
+   tasks:['You took the Kaplan proctored exam — well done','Review your score by topic — note any surprises','Identify your top 2 weak topics from the proctored exam','Re-take those topics\u2019 daily quizzes in the app','You have 1 week until PSI — shift focus to GA-specific content','Drink water, take a real rest day if needed']},
+  {day:23,week:4,title:'GA Law Lock-In Day 1',focus:'GA-specific drilling (52 questions on the real exam)',
+   topics:['GREC','BRRETA','License rules','Recovery Fund'],
+   tasks:['Re-take the Day 11 GA Law quiz — target 90%+','Re-read Kaplan GA Licensing chapter','Drill 30 GA-specific practice questions','Flashcards: GA Law section (use the daily shortcut)','Memorize all GA numbers: 75/25/36 hours, $25K/$75K, 6 commissioners','Watch the LEARN Georgia Laws session if available']},
+  {day:24,week:4,title:'GA Law Lock-In Day 2',focus:'GA closings, taxes, disclosures',
+   topics:['Security deed','Transfer tax','Intangible tax','Attorney closing'],
+   tasks:['Re-take the Day 12 GA Law quiz — target 90%+','Practice GA transfer tax problems ($1/$1,000)','Practice GA intangible tax problems ($1.50/$500 of LOAN)','Memorize: GA = title theory + security deed + attorney closing','Drill 30 more GA-specific questions','Flashcards: GA Law section, all cards']},
+  {day:25,week:4,title:'Final National Sweep',focus:'Re-take everything that ever went below 80%',
+   topics:['Review pass','Weak-spot patching'],
+   tasks:['Open the Review tab — work through every missed question','Re-take any daily quiz still below 80%','Drill 30 Kaplan questions across mixed topics','Watch a final LEARN Exam Prep National Laws session if available','Quick formula review','Sleep 8 hours']},
+  {day:26,week:4,title:'Second Full Mock + GA Mini-Mock',focus:'Final simulation',
+   topics:['Final practice exam'],
+   tasks:['Take a FULL 152-question Kaplan practice exam, timed (4 hrs)','GOAL: 85%+ overall, 80%+ each portion (you\u2019ve come a long way)','Take a 2nd in-app Mock Exam if you have energy','Review every wrong answer carefully','Note: only 2 days until PSI — focus is on confidence now']},
+  {day:27,week:4,title:'Day Before PSI — Light Review',focus:'Tomorrow is exam day — calm + prepared',
+   topics:['Light review only'],
+   tasks:['Review flashcards — NO new material today','Re-read your "wrong answer" notes from yesterday','Practice 15-20 questions on your single weakest topic ONLY','Pack your PSI exam bag: 2 IDs (1 govt photo), GCIC report (under 60 days old)','Confirm PSI test center address + arrival time (arrive 30 min early)','Light dinner, NO studying after 6pm','Sleep 8 hours — you\u2019re ready']},
+  {day:28,week:4,title:'PSI EXAM DAY',focus:'Walk in. Pass. Become a licensed GA real estate agent.',
+   topics:['Exam day'],
+   tasks:['Wake up early — eat a real breakfast (protein + slow carbs)','Bring 2 forms of ID + GCIC report','Arrive 30 minutes early to the PSI center','Take 2 deep breaths before starting','Read every question TWICE — watch for "EXCEPT" and "NOT"','Flag uncertain questions, return to them at the end','Trust your preparation — you put in 28 days of real work','GO PASS THAT EXAM 🍑']}
 ];
 
 const QUIZZES = {
@@ -606,10 +655,12 @@ const FORMULAS = [
 
 /* ============================ STATE ============================ */
 const KEY='ga-re-study-v2';
-let S={progress:{},answers:{},submitted:{},examDate:null,mock:null};
+let S={progress:{},answers:{},submitted:{},examDate:null,kaplanDate:null,psiDate:null,mock:null};
 try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw));}catch(e){}
 // migrate old v1 data if present
 try{const old=localStorage.getItem('ga-re-study-v1');if(old&&!localStorage.getItem(KEY)){const o=JSON.parse(old);S.progress=o.progress||{};S.answers=o.answers||{};S.submitted=o.submitted||{};}}catch(e){}
+// migrate single examDate (legacy) into psiDate so existing users don't lose their date
+if(S.examDate && !S.psiDate){S.psiDate=S.examDate;S.examDate=null;}
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 
 let tab='overview', day=1, fcTopic='all', fcIdx=0, fcFlip=false;
@@ -629,7 +680,7 @@ function priFill(p){return p==='CRITICAL'?'linear-gradient(90deg,#8b3a1f,#c97e3f
 const DAY_TOPIC={1:'Property Basics',2:'Estates & Ownership',3:'Land Use',4:'Agency',5:'Contracts',6:'Financing',7:'Mixed Review',8:'Valuation',9:'Fair Housing',10:'Math',11:'GA Law I',12:'GA Law II'};
 
 // maps each daily-plan day to the flashcard filter topic it should open
-const DAY_FLASHCARD={1:'Property',2:'Property',3:'Land Use',4:'Agency',5:'Contracts',6:'Financing',7:'all',8:'Valuation',9:'Fair Housing',10:'Math',11:'GA Law',12:'GA Law',13:'all',14:'all'};
+const DAY_FLASHCARD={1:'Property',2:'Property',3:'Land Use',4:'Agency',5:'Contracts',6:'Financing',7:'all',8:'Valuation',9:'Fair Housing',10:'Math',11:'GA Law',12:'GA Law',13:'all',14:'all',15:'all',16:'all',17:'Agency',18:'Math',19:'all',20:'all',21:'all',22:'all',23:'GA Law',24:'GA Law',25:'all',26:'all',27:'all',28:'all'};
 
 // every question the user answered WRONG on a submitted quiz
 function missedList(){
@@ -659,13 +710,34 @@ function topicStats(){
   return Object.keys(m).map(t=>({topic:t,pct:Math.round(m[t].correct/m[t].total*100),correct:m[t].correct,total:m[t].total})).sort((a,b)=>a.pct-b.pct);
 }
 
-// days remaining until the user's exam date (null if not set)
-function daysUntilExam(){
-  if(!S.examDate)return null;
-  const exam=new Date(S.examDate+'T00:00:00');
+// days remaining until a given exam date string (null if not set or past)
+function daysUntilDate(dateStr){
+  if(!dateStr)return null;
+  const exam=new Date(dateStr+'T00:00:00');
+  if(isNaN(exam.getTime()))return null;
   const now=new Date();now.setHours(0,0,0,0);
   return Math.round((exam-now)/(1000*60*60*24));
 }
+
+// for the header tagline: return the soonest upcoming exam in {label, days}, or null
+function nextUpcomingExam(){
+  const k=daysUntilDate(S.kaplanDate), p=daysUntilDate(S.psiDate);
+  const opts=[];
+  if(k!==null && k>=0) opts.push({label:'Kaplan', days:k, date:S.kaplanDate});
+  if(p!==null && p>=0) opts.push({label:'PSI', days:p, date:S.psiDate});
+  if(opts.length===0){
+    // both either unset or both past — return whichever past one is closest if any
+    const past=[];
+    if(k!==null && k<0) past.push({label:'Kaplan', days:k, date:S.kaplanDate});
+    if(p!==null && p<0) past.push({label:'PSI', days:p, date:S.psiDate});
+    if(past.length===0)return null;
+    return past.sort((a,b)=>b.days-a.days)[0]; // closest past
+  }
+  return opts.sort((a,b)=>a.days-b.days)[0]; // soonest upcoming
+}
+
+// legacy helper kept for any old references
+function daysUntilExam(){return daysUntilDate(S.psiDate||S.kaplanDate);}
 
 // ---- Mock exam: pull a balanced 50-question set from all quiz banks ----
 function buildMock(){
@@ -683,14 +755,13 @@ function updateHeader(){
   // dynamic eyebrow tagline: switches to a live countdown once exam date is set
   const eb=$('#eyebrowText');
   if(eb){
-    const dleft=daysUntilExam();
-    if(dleft===null) eb.textContent='Fourteen Days to License';
-    else if(dleft<0) eb.textContent='Hope you crushed it';
-    else if(dleft===0) eb.textContent='Exam day · Today';
-    else if(dleft===1) eb.textContent='1 day to your exam';
-    else eb.textContent=dleft+' days to your exam';
-    // turn red/urgent when within 3 days
-    eb.style.color = (dleft!==null && dleft<=3 && dleft>=0) ? 'var(--copper)' : '';
+    const next=nextUpcomingExam();
+    if(next===null) eb.textContent='Twenty-Eight Days to License';
+    else if(next.days<0) eb.textContent='Hope you crushed it';
+    else if(next.days===0) eb.textContent=next.label+' exam · TODAY';
+    else if(next.days===1) eb.textContent='1 day to your '+next.label+' exam';
+    else eb.textContent=next.days+' days to your '+next.label+' exam';
+    eb.style.color = (next!==null && next.days<=3 && next.days>=0) ? 'var(--copper)' : '';
   }
 }
 
@@ -707,15 +778,26 @@ function renderTabs(){
 
 /* ============================ VIEWS ============================ */
 function viewOverview(){
-  const dleft=daysUntilExam();
   let h='<div class="fade">';
-  // countdown / date setter
-  if(dleft===null){
-    h+='<div class="countdown set"><div style="flex:1"><div class="cd-label sans">SET YOUR EXAM DATE</div><div class="cd-sub sans">Pick the day you\u2019re testing, then tap Set.</div></div><div class="cd-setrow"><input type="date" id="examInput" class="cd-input sans" min="2026-01-01" value="'+(S._examDraft||'')+'"><button class="cd-setbtn sans" id="examSet">Set</button></div></div>';
+  // ---- DUAL COUNTDOWN: Kaplan proctored + PSI exam ----
+  h+='<div class="dual-cd">';
+  // Kaplan card
+  const kd=daysUntilDate(S.kaplanDate);
+  if(kd===null || !S.kaplanDate){
+    h+='<div class="countdown set"><div style="flex:1"><div class="cd-label sans">KAPLAN PROCTORED EXAM</div><div class="cd-sub sans">Pick the date, then tap Set.</div></div><div class="cd-setrow"><input type="date" id="kaplanInput" class="cd-input sans" min="2026-01-01" value="'+(S._kaplanDraft||'')+'"><button class="cd-setbtn sans" id="kaplanSet">Set</button></div></div>';
   }else{
-    const urgent=dleft<=3;
-    h+=`<div class="countdown${urgent?' urgent':''}"><div><div class="cd-big">${dleft<0?'Exam day passed':dleft===0?'EXAM IS TODAY':dleft+' day'+(dleft===1?'':'s')}</div><div class="cd-label sans">${dleft<0?'Hope you crushed it':'until your exam · '+S.examDate}</div></div><button class="cd-edit sans" id="examEdit">Change</button></div>`;
+    const urgent=kd<=3 && kd>=0;
+    h+=`<div class="countdown${urgent?' urgent':''}"><div><div class="cd-big">${kd<0?'Done':kd===0?'TODAY':kd+' day'+(kd===1?'':'s')}</div><div class="cd-label sans">${kd<0?'Kaplan exam · complete':'until Kaplan proctored · '+S.kaplanDate}</div></div><button class="cd-edit sans" id="kaplanEdit">Change</button></div>`;
   }
+  // PSI card
+  const pd=daysUntilDate(S.psiDate);
+  if(pd===null || !S.psiDate){
+    h+='<div class="countdown set"><div style="flex:1"><div class="cd-label sans">PSI EXAM (LICENSE)</div><div class="cd-sub sans">Pick the date, then tap Set.</div></div><div class="cd-setrow"><input type="date" id="psiInput" class="cd-input sans" min="2026-01-01" value="'+(S._psiDraft||'')+'"><button class="cd-setbtn sans" id="psiSet">Set</button></div></div>';
+  }else{
+    const urgent=pd<=3 && pd>=0;
+    h+=`<div class="countdown${urgent?' urgent':''}"><div><div class="cd-big">${pd<0?'Done':pd===0?'TODAY':pd+' day'+(pd===1?'':'s')}</div><div class="cd-label sans">${pd<0?'PSI exam · complete':'until PSI exam · '+S.psiDate}</div></div><button class="cd-edit sans" id="psiEdit">Change</button></div>`;
+  }
+  h+='</div>';
   const stats=[['Total Questions','152','100 National + 52 GA'],['Time Limit','4 hours','PSI testing center'],['Passing Score','75%','on EACH portion'],['Exam Fee','$121','plus $170 license fee']];
   h+='<div class="stat-grid">';
   h+=stats.map(s=>`<div class="stat"><div class="k sans">${s[0]}</div><div class="v">${s[1]}</div><div class="s">${s[2]}</div></div>`).join('');
@@ -776,7 +858,7 @@ function viewPlan(){
   // nav
   h+='<div class="dnav">';
   if(day>1)h+=`<button class="sans" data-go="${day-1}">‹ Day ${day-1}</button>`;
-  if(day<14)h+=`<button class="sans next" data-go="${day+1}">Day ${day+1} ›</button>`;
+  if(day<PLAN.length)h+=`<button class="sans next" data-go="${day+1}">Day ${day+1} ›</button>`;
   h+='</div></div>';
   return h;
 }
@@ -971,16 +1053,26 @@ function wire(){
   const fp=$('#fcPrev');if(fp)fp.onclick=e=>{e.stopPropagation();if(fcIdx>0){fcIdx--;fcFlip=false;render();}};
   const fn=$('#fcNext');if(fn)fn.onclick=e=>{e.stopPropagation();const list=fcTopic==='all'?FLASHCARDS:FLASHCARDS.filter(f=>f[0]===fcTopic);if(fcIdx<list.length-1){fcIdx++;fcFlip=false;render();}};
 
-  // exam date setter
-  const ei=$('#examInput');if(ei)ei.onchange=()=>{ S._examDraft=ei.value; }; // just remember it, don't re-render
-  const es=$('#examSet');if(es)es.onclick=()=>{
-    const v=(($('#examInput')&&$('#examInput').value)||S._examDraft||'').trim();
+  // exam date setters — Kaplan + PSI
+  const ki=$('#kaplanInput');if(ki)ki.onchange=()=>{ S._kaplanDraft=ki.value; };
+  const ks=$('#kaplanSet');if(ks)ks.onclick=()=>{
+    const v=(($('#kaplanInput')&&$('#kaplanInput').value)||S._kaplanDraft||'').trim();
     if(!/^\d{4}-\d{2}-\d{2}$/.test(v)){alert('Please pick a full date first.');return;}
     const d=new Date(v+'T00:00:00');
     if(isNaN(d.getTime())||d.getFullYear()<2025){alert('Please pick a valid date.');return;}
-    S.examDate=v;S._examDraft=null;persist();render();
+    S.kaplanDate=v;S._kaplanDraft=null;persist();render();
   };
-  const ee=$('#examEdit');if(ee)ee.onclick=()=>{S.examDate=null;persist();render();};
+  const ke=$('#kaplanEdit');if(ke)ke.onclick=()=>{S.kaplanDate=null;persist();render();};
+
+  const pi=$('#psiInput');if(pi)pi.onchange=()=>{ S._psiDraft=pi.value; };
+  const ps=$('#psiSet');if(ps)ps.onclick=()=>{
+    const v=(($('#psiInput')&&$('#psiInput').value)||S._psiDraft||'').trim();
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(v)){alert('Please pick a full date first.');return;}
+    const d=new Date(v+'T00:00:00');
+    if(isNaN(d.getTime())||d.getFullYear()<2025){alert('Please pick a valid date.');return;}
+    S.psiDate=v;S._psiDraft=null;persist();render();
+  };
+  const pe=$('#psiEdit');if(pe)pe.onclick=()=>{S.psiDate=null;persist();render();};
 
   // missed-questions review nav
   const mp=$('#missPrev');if(mp)mp.onclick=()=>{if(missIdx>0){missIdx--;render();}};
