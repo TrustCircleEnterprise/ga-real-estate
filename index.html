@@ -201,6 +201,8 @@
   .cheat-table td:last-child{color:var(--gold);font-weight:500}
   .cheat-golden{background:linear-gradient(135deg,var(--bg3),var(--bg2));border:1px solid var(--gold);
     padding:18px 22px;margin-bottom:18px}
+  .cheat-golden.top10{background:linear-gradient(135deg,var(--rust2),var(--bg3));border:1px solid var(--copper)}
+  .cheat-golden.top10 li{margin-bottom:4px}
   .cheat-h{font-size:13px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
   .cheat-golden ol,.cheat-golden ul{margin-left:20px;color:var(--paper);font-size:14px;line-height:1.8}
   .cheat-golden b{color:var(--gold)}
@@ -937,10 +939,30 @@ function viewCheat(){
      f:'28% (front-end) = max for PITI alone\n36% (back-end) = max for PITI + ALL other debts',
      ex:'$6,600 monthly income \u00d7 0.28 = $1,848 max PITI',
      trap:'No other debts given \u2192 use 28%. The 36% answer is the trap when no debts are listed.'},
-    {title:'7. Interest-only → find Principal',clue:'Given rate + monthly payment, no loan term',
+    {title:'7. Interest-only → find Principal',clue:'"Given rate + monthly payment, no loan term." (NO factor table provided)',
      f:'Principal = (monthly payment \u00d7 12) \u00f7 rate',
      ex:'($1,012 \u00d7 12) \u00f7 0.055 = $220,800',
-     trap:'No term given = treat payment as pure interest. I = P \u00d7 R.'},
+     trap:'No term given AND no factor table = treat payment as pure interest. I = P \u00d7 R.'},
+    {title:'8. Mortgage Factor table → find Loan Amount',clue:'"Monthly payment is $___ at ___% interest." (Factor TABLE provided)',
+     f:'Loan (in thousands) = Monthly Payment \u00f7 Factor\nThen \u00d7 1,000',
+     ex:'$1,012 \u00f7 5.27 = 192 \u2192 \u00d7 1,000 = $192,000',
+     trap:'If the exam gives you a payment factor table, USE IT \u2014 don\u2019t default to pattern #7. Same numbers give different answers.'},
+    {title:'9. PITI with OTHER debts → 28/36 (pick LOWER)',clue:'"Monthly income $___, other debts $___."',
+     f:'A) Income \u00d7 0.28 = max PITI alone\nB) Income \u00d7 0.36 \u2212 other debts = max PITI w/ debts\nUse the SMALLER of A and B',
+     ex:'Income $6,833/mo: 28% = $1,913 \u00b7 36% \u2212 $500 debts = $1,960 \u2192 use $1,913',
+     trap:'When debts are listed, ALWAYS run both \u2014 the lower one wins. Don\u2019t assume 36% applies.'},
+    {title:'10. Interest Rate from payment',clue:'"Quarterly/Monthly payment $___ on a $___ loan. What\u2019s the rate?"',
+     f:'Annual Interest \u00f7 Principal = Rate\n(Quarterly \u00d7 4, Monthly \u00d7 12 to get annual)',
+     ex:'$1,340.63 quarterly \u00d7 4 = $5,362.52 \u00f7 $65,000 = 8.25%',
+     trap:'Match the multiplier to the period \u2014 quarterly\u00d74, monthly\u00d712, semi-annual\u00d72.'},
+    {title:'11. Commission Rate from agent\u2019s check',clue:'"Agent got $___ which was ___% of the total. Sale was $___. What was the commission rate?"',
+     f:'Step 1: Agent check \u00f7 split % = total commission\nStep 2: Total commission \u00f7 sale price = rate',
+     ex:'$2,800 \u00f7 0.35 = $8,000 total \u2192 $8,000 \u00f7 $160,000 = 5%',
+     trap:'Don\u2019t use the agent\u2019s % as the commission rate \u2014 that\u2019s their SPLIT of the rate.'},
+    {title:'12. Property Tax Proration',clue:'"Closing on ___. Annual/Semiannual tax is $___. What does seller owe?"',
+     f:'Daily tax = Annual \u00f7 360\nSeller owes = Daily \u00d7 days they owned this year',
+     ex:'Semi-annual $450 \u2192 annual $900 \u00f7 360 = $2.50/day \u00d7 79 days (Jul 1\u2013Sep 19) = $197.50',
+     trap:'Banker\u2019s method = 360 days, 30-day months. Sell semi-annual = double it for annual first.'},
   ];
 
   // Land fractions table
@@ -990,6 +1012,30 @@ function viewCheat(){
     {t:'Tenancy for years',
      r:'Fixed start + fixed end \u2192 NO notice needed to terminate.',
      trap:'"For years" doesn\u2019t mean "many years" \u2014 it means a fixed-term lease (could be 6 months).'},
+    {t:'Tenant in Common vs Joint Tenancy vs Severalty',
+     r:'Tenant in Common = can leave share in a WILL (heirs, estate, probate keywords).\nJoint Tenancy = right of SURVIVORSHIP (goes to other owners).\nTenancy by Entirety = married couples only.\nSeveralty = ONE owner only.',
+     trap:'See "will/heirs/probate" \u2192 Tenant in Common. See "survivor" \u2192 Joint Tenancy.'},
+    {t:'Silent Second (Mortgage Fraud)',
+     r:'Seller secretly loans the buyer their down payment \u2014 lender doesn\u2019t know about it.\nWho commits fraud? BOTH the seller AND the buyer.',
+     trap:'"Silent" = hidden from the lender = fraud. Not just unethical \u2014 illegal.'},
+    {t:'Designated Agency',
+     r:'Same brokerage, different agents represent the buyer and seller separately.',
+     trap:'Designated = Same Broker, Separate Agents. Don\u2019t confuse with dual agency (one agent both sides).'},
+    {t:'Fully Amortized Loan',
+     r:'Every payment contains BOTH principal AND interest.\nInterest is paid in arrears (after it accrues).\nPays loan to zero balance by end of term.',
+     trap:'Amortized = A little of Both. Interest-only = no principal. Balloon = mostly interest with a lump at the end.'},
+    {t:'Principal Broker Liability',
+     r:'A salesperson messes up \u2014 who is ULTIMATELY responsible? The Principal Broker.',
+     trap:'The Buck Stops with the Broker. Even if the agent did it alone, the broker carries the liability.'},
+    {t:'Property Manager: Money vs Law',
+     r:'\u2713 Manager DOES: budgets, cash flow, P&L statements, leasing (existing forms), maintenance.\n\u2717 Manager DOES NOT: draft legal documents, create new lease agreements (that\u2019s the lawyer).',
+     trap:'Money = Manager. Law = Lawyer. "Draft a new lease" = NOT the property manager\u2019s job.'},
+    {t:'Antitrust \u2014 What\u2019s legal vs illegal',
+     r:'\u2717 ILLEGAL: price fixing, group boycotts, market allocation (between competing firms).\n\u2713 LEGAL: a single brokerage setting its OWN internal commission schedule.',
+     trap:'My company alone = OK. Competitors coordinating = illegal.'},
+    {t:'Capital Gains Exclusion (Primary Residence)',
+     r:'Single filer: $250,000 excluded from gains on sale of primary residence.\nMarried filing jointly: $500,000.\nMust have owned + lived in the home 2 of the last 5 years.',
+     trap:'250 single / 500 married. The 5-year question is the trap (it\u2019s 2 of 5, not 5 straight).'},
   ];
 
   const topNums=[
@@ -1004,6 +1050,23 @@ function viewCheat(){
   let h='<div class="fade"><h2>Cheat Sheet</h2><p class="lead">Pattern \u2192 formula \u2192 example. Read the clue in the question, match the pattern, run the one-liner. Most solve in under 30 seconds.</p>';
 
   // ---- Golden rules at top ----
+  // ---- Top 10 Memorization Shortcuts (front-and-center) ----
+  h+='<div class="cheat-golden top10"><div class="cheat-h sans">\ud83d\ude80 Top 10 Memorization Shortcuts</div><ol>';
+  const top10=[
+    '1 Section = 1 Square Mile = <b>640 acres</b>',
+    '1 Acre = <b>43,560 sq ft</b>',
+    '<b>28%</b> = max for Housing (PITI) \u00b7 <b>36%</b> = max for Total Debt',
+    'Less Down Payment = Higher LTV',
+    'Tenant in Common \u2192 leaves to <b>heirs (will)</b>',
+    'Joint Tenancy \u2192 <b>survivorship</b>',
+    'Principal Broker = <b>ultimate responsibility</b> for agent mistakes',
+    'Capital Gains: <b>$250K single \u00b7 $500K married</b>',
+    'Payment \u00f7 Factor = Loan in <b>Thousands</b>',
+    'NET \u2192 DIVIDE \u00b7 Have the price \u2192 MULTIPLY',
+  ];
+  top10.forEach(s=>h+='<li>'+s+'</li>');
+  h+='</ol></div>';
+
   h+='<div class="cheat-golden"><div class="cheat-h sans">\u2b50 The Three Golden Rules</div><ol>';
   h+='<li><b>NET \u2192 DIVIDE</b> by (1 \u2212 rate). Have the price \u2192 MULTIPLY.</li>';
   h+='<li><b>Land:</b> "of" = multiply fractions, "and" = add parcels, always \u00d7 640.</li>';
@@ -1023,6 +1086,18 @@ function viewCheat(){
   h+='</div>';
 
   // ---- Part 2: Land ----
+  // ---- Sample Mortgage Factor table (referenced by Pattern 8) ----
+  h+='<div class="cheat-card" style="margin-bottom:18px">';
+  h+='<div class="cheat-title">\ud83d\udcd8 Sample Mortgage Factor Table (30-yr, per $1,000)</div>';
+  h+='<table class="cheat-table">';
+  h+='<thead><tr><th>Rate</th><th>Factor</th><th>Rate</th><th>Factor</th></tr></thead><tbody>';
+  const factors=[['4.0%','4.77','6.5%','6.32'],['4.5%','5.07','7.0%','6.65'],['5.0%','5.37','7.5%','6.99'],['5.5%','5.68','8.0%','7.34'],['6.0%','6.00','8.5%','7.69']];
+  factors.forEach(r=>h+=`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`);
+  h+='</tbody></table>';
+  h+='<div class="cheat-rule" style="margin-top:8px"><b>How to use:</b> Monthly Payment \u00f7 Factor = Loan in Thousands \u2192 \u00d7 1,000</div>';
+  h+='<div class="cheat-trap">\ud83e\udde0 The exam usually GIVES you a factor table on these questions. Look for it before defaulting to Pattern 7.</div>';
+  h+='</div>';
+
   h+='<h3 class="cheat-section sans">PART 2 \u00b7 Land Measurement (memorize cold)</h3>';
   h+='<div class="cheat-card"><table class="cheat-table">';
   h+='<thead><tr><th>Fact</th><th>Value</th></tr></thead><tbody>';
