@@ -177,6 +177,34 @@
   .f-card .ff{font-size:17px;margin-bottom:10px}
   .f-card .fn{font-size:13px;color:var(--gold-dim);line-height:1.5}
 
+  /* cheat sheet */
+  .cheat-section{font-size:13px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;
+    margin:34px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);font-weight:400}
+  .cheat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin-bottom:18px}
+  .cheat-card{background:var(--bg2);border:1px solid var(--line);padding:18px}
+  .cheat-card .cheat-title{font-size:15px;color:var(--paper);margin-bottom:10px;font-weight:500;line-height:1.3}
+  .cheat-clue{font-size:13px;color:var(--gold-dim);margin-bottom:8px;font-style:italic;line-height:1.5}
+  .cheat-clue b{color:var(--gold);font-style:normal}
+  .cheat-formula{background:var(--bg);border-left:3px solid var(--gold);padding:10px 12px;
+    font-size:14px;line-height:1.6;margin-bottom:8px;font-family:Georgia,serif}
+  .cheat-ex{font-size:13px;color:var(--paper);margin-bottom:10px;line-height:1.5}
+  .cheat-ex b{color:var(--gold)}
+  .cheat-trap{background:rgba(201,126,63,.10);border-left:3px solid var(--copper);
+    padding:9px 12px;font-size:12.5px;color:var(--gold-dim);line-height:1.5;font-style:italic}
+  .cheat-rule{font-size:14px;color:var(--paper);line-height:1.7;margin-bottom:10px}
+  .cheat-rule b{color:var(--gold)}
+  .cheat-bul{margin:6px 0 12px 18px;color:var(--paper);font-size:13.5px;line-height:1.7}
+  .cheat-bul li{margin-bottom:3px}
+  .cheat-table{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:14px}
+  .cheat-table th,.cheat-table td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line)}
+  .cheat-table th{color:var(--gold);font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:600}
+  .cheat-table td:last-child{color:var(--gold);font-weight:500}
+  .cheat-golden{background:linear-gradient(135deg,var(--bg3),var(--bg2));border:1px solid var(--gold);
+    padding:18px 22px;margin-bottom:18px}
+  .cheat-h{font-size:13px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
+  .cheat-golden ol,.cheat-golden ul{margin-left:20px;color:var(--paper);font-size:14px;line-height:1.8}
+  .cheat-golden b{color:var(--gold)}
+
   /* tips */
   .tip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-bottom:28px}
   .tip{background:var(--bg2);border:1px solid var(--line);padding:22px}
@@ -766,7 +794,7 @@ function updateHeader(){
 }
 
 /* ============================ TABS ============================ */
-const TABS=[['overview','Exam Map'],['plan','Daily Plan'],['review','Review'],['mock','Mock Exam'],['flashcards','Flashcards'],['formulas','Formulas'],['tips','Test Day']];
+const TABS=[['overview','Exam Map'],['plan','Daily Plan'],['review','Review'],['mock','Mock Exam'],['flashcards','Flashcards'],['formulas','Formulas'],['cheat','Cheat Sheet'],['tips','Test Day']];
 function renderTabs(){
   $('#tabs').innerHTML=TABS.map(([id,label])=>{
     let badge='';
@@ -879,6 +907,152 @@ function viewFormulas(){
   let h='<div class="fade"><h2>Math & Formula Reference</h2><p class="lead">Memorize these cold. Math is only 7% of the exam — but it\u2019s the easiest 7% if you know the formulas.</p><div class="f-grid">';
   h+=FORMULAS.map(f=>`<div class="f-card"><div class="ft sans">${f[0]}</div><div class="ff">${esc(f[1])}</div><div class="fn sans">${esc(f[2])}</div></div>`).join('');
   h+='</div></div>';
+  return h;
+}
+
+function viewCheat(){
+  // Math patterns - clue → formula → example → trap warning
+  const math=[
+    {title:'1. Seller\u2019s NET → find Sale Price',clue:'"Seller netted $___ after a ___% commission."',
+     f:'Sale Price = Net \u00f7 (1 \u2212 commission rate)',
+     ex:'6% commission \u2192 divide by 0.94 \u2192 $355,000 \u00f7 0.94 = $377,660',
+     trap:'NET \u2192 DIVIDE. Never multiply. The trap answer is always Net \u00d7 1.06.'},
+    {title:'2. Sale Price → find Commission',clue:'"Property sold for $___, commission was ___%"',
+     f:'Commission = Sale Price \u00d7 rate',
+     ex:'$175,000 \u00d7 0.06 = $10,500',
+     trap:'Have the price \u2192 MULTIPLY.'},
+    {title:'3. Brokerage\u2019s share',clue:'"How much did the brokerage keep?"',
+     f:'Total commission \u2212 Agent\u2019s share = Brokerage share',
+     ex:'Total $10,500 \u2212 Agent $6,125 = Broker $4,375',
+     trap:'Brokerage gets what\u2019s LEFT after the agent is paid. Read whose share is asked.'},
+    {title:'4. Referral fee → find Sale Price (DIVIDE TWICE)',clue:'"Agent got a $___ referral check (___% of their commission). What was the sale price?"',
+     f:'Step 1: Referral \u00f7 referral % = agent\u2019s full commission\nStep 2: Agent\u2019s commission \u00f7 agent\u2019s % of sale = Sale Price',
+     ex:'$2,062.50 \u00f7 0.25 = $8,250  \u2192  $8,250 \u00f7 0.015 = $550,000',
+     trap:'Ignore the other commission percentages. Only follow the one slice the referral came from.'},
+    {title:'5. Replacement / Construction Cost',clue:'"Cost to rebuild a ___ ft \u00d7 ___ ft home at $___ per sq ft"',
+     f:'L \u00d7 W \u00d7 Cost per sq ft',
+     ex:'65 \u00d7 30 = 1,950 sq ft \u00d7 $128.50 = $250,575',
+     trap:'L \u00d7 W \u00d7 Cost. Sanity-check the magnitude.'},
+    {title:'6. Loan Qualifying (28/36 ratios)',clue:'"What\u2019s the maximum monthly payment they can afford?"',
+     f:'28% (front-end) = max for PITI alone\n36% (back-end) = max for PITI + ALL other debts',
+     ex:'$6,600 monthly income \u00d7 0.28 = $1,848 max PITI',
+     trap:'No other debts given \u2192 use 28%. The 36% answer is the trap when no debts are listed.'},
+    {title:'7. Interest-only → find Principal',clue:'Given rate + monthly payment, no loan term',
+     f:'Principal = (monthly payment \u00d7 12) \u00f7 rate',
+     ex:'($1,012 \u00d7 12) \u00f7 0.055 = $220,800',
+     trap:'No term given = treat payment as pure interest. I = P \u00d7 R.'},
+  ];
+
+  // Land fractions table
+  const landRows=[
+    ['1 Section / 1 Square Mile','640 acres'],
+    ['1 Acre','43,560 sq ft'],
+    ['\u00bd of a section','320 acres'],
+    ['\u00bc','160 acres'],
+    ['\u215b','80 acres'],
+    ['1/16','40 acres'],
+    ['1/32','20 acres'],
+    ['1/64','10 acres'],
+  ];
+
+  // Concept hooks - title / rule / trap
+  const concepts=[
+    {t:'Gross Living Area (GLA)',
+     r:'FINISHED + ABOVE GRADE only.\n\u2713 Bedrooms, laundry, hallways, finished above-grade rooms\n\u2717 Basement (even finished \u2014 below grade), patio, deck, porch, garage, unfinished space',
+     trap:'A finished basement feels like it counts but doesn\u2019t \u2014 it\u2019s below grade. Patio is the "too obvious" distractor.'},
+    {t:'Progression vs Regression',
+     r:'Progression: a smaller home\u2019s value goes UP near bigger homes.\nRegression: a bigger home\u2019s value goes DOWN near smaller homes.',
+     trap:'Match direction to the SUBJECT home. Smaller home + nicer neighbors = Progression.'},
+    {t:'Property Manager Authority',
+     r:'\u2713 Can do alone: repairs, maintenance, leasing, budgets (anything existing)\n\u2717 Cannot do alone: new construction / capital improvements (needs owner approval)',
+     trap:'Keyword "add" or "build new" = exceeds authority. Manage \u2260 Improve.'},
+    {t:'LTV \u2014 Lowest = biggest down payment',
+     r:'Conventional \u2248 80% LTV (20% down) \u2014 LOWEST\nFHA \u2248 96.5% LTV (3.5% down)\nVA = up to 100% LTV (0% down)\nPMI = flag for high LTV',
+     trap:'Lowest LTV = most cash down = Conventional.'},
+    {t:'Mortgage Types',
+     r:'Blanket = one loan, many parcels (developer\u2019s loan; partial release frees lots one at a time)\nPurchase money = seller finances the buyer\nOpen-end = re-borrow more later (like a line of credit)\nPackage = real estate + personal property (appliances/furniture)\nStraight = interest-only, principal due at the end\nPartially amortized = \ud83c\udf88 balloon payment at the end\nFully amortized = paid off completely, no balloon',
+     trap:'"Subdivision" + "partial release" = Blanket.'},
+    {t:'Closing \u2014 Rent vs Security Deposits',
+     r:'Rent = PRORATED (paid in advance \u2014 split by days each party owns the property)\nSecurity deposits = transferred IN FULL to the buyer (trust money \u2014 never prorated)',
+     trap:'Rent \u2192 ADVANCE. Taxes \u2192 ARREARS. Deposits never split.'},
+    {t:'Tenant Improvements (TIs)',
+     r:'Adapting/customizing a space to a specific tenant\u2019s needs (common in commercial leases).',
+     trap:'"Customize space to the tenant" = Tenant Improvements.'},
+    {t:'Characteristics of Real Estate',
+     r:'Economic (value): Scarcity, Improvements, Permanence of investment (fixity), Area preference (situs)\nPhysical (the land): Immobility, Indestructibility, Uniqueness (non-homogeneity)',
+     trap:'"License" belongs to neither \u2014 it\u2019s a legal term, so it\u2019s often the EXCEPT answer.'},
+    {t:'Joint Tenancy \u2014 TTIP',
+     r:'Unities of Time, Title, Interest, Possession. Has right of survivorship.',
+     trap:'Miss one unity = no joint tenancy (becomes tenancy in common).'},
+    {t:'Deed of Trust roles',
+     r:'Trustor = the borrower\nBeneficiary = the bank/lender\nTrustee = neutral 3rd party (holds title)',
+     trap:'Trustor sounds like "trustee" \u2014 don\u2019t mix them up. Trustor = the one who trusts (borrower).'},
+    {t:'Tenancy for years',
+     r:'Fixed start + fixed end \u2192 NO notice needed to terminate.',
+     trap:'"For years" doesn\u2019t mean "many years" \u2014 it means a fixed-term lease (could be 6 months).'},
+  ];
+
+  const topNums=[
+    'Section / Square Mile = 640 acres',
+    'Acre = 43,560 sq ft',
+    'Front-end (PITI) ratio = 28%',
+    'Back-end (total debt) ratio = 36%',
+    '1 discount point = 1% of the LOAN (not the price)',
+    'Net \u00f7 0.94 = sale price (at 6% commission)',
+  ];
+
+  let h='<div class="fade"><h2>Cheat Sheet</h2><p class="lead">Pattern \u2192 formula \u2192 example. Read the clue in the question, match the pattern, run the one-liner. Most solve in under 30 seconds.</p>';
+
+  // ---- Golden rules at top ----
+  h+='<div class="cheat-golden"><div class="cheat-h sans">\u2b50 The Three Golden Rules</div><ol>';
+  h+='<li><b>NET \u2192 DIVIDE</b> by (1 \u2212 rate). Have the price \u2192 MULTIPLY.</li>';
+  h+='<li><b>Land:</b> "of" = multiply fractions, "and" = add parcels, always \u00d7 640.</li>';
+  h+='<li><b>Read who/what is asked</b> \u2014 brokerage vs agent, PITI vs total debt, smaller vs bigger home. The trap is usually the other party\u2019s number.</li>';
+  h+='</ol></div>';
+
+  // ---- Part 1: Math ----
+  h+='<h3 class="cheat-section sans">PART 1 \u00b7 The Math (pattern \u2192 formula)</h3>';
+  h+='<div class="cheat-grid">';
+  math.forEach(m=>{
+    h+=`<div class="cheat-card"><div class="cheat-title">${esc(m.title)}</div>`;
+    h+=`<div class="cheat-clue"><b>Clue:</b> ${esc(m.clue)}</div>`;
+    h+=`<div class="cheat-formula">${esc(m.f).replace(/\n/g,'<br>')}</div>`;
+    h+=`<div class="cheat-ex"><b>Example:</b> ${esc(m.ex)}</div>`;
+    h+=`<div class="cheat-trap">\ud83e\udde0 ${esc(m.trap)}</div></div>`;
+  });
+  h+='</div>';
+
+  // ---- Part 2: Land ----
+  h+='<h3 class="cheat-section sans">PART 2 \u00b7 Land Measurement (memorize cold)</h3>';
+  h+='<div class="cheat-card"><table class="cheat-table">';
+  h+='<thead><tr><th>Fact</th><th>Value</th></tr></thead><tbody>';
+  landRows.forEach(r=>{h+=`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`;});
+  h+='</tbody></table>';
+  h+='<div class="cheat-rule"><b>Legal descriptions:</b> "of" = <b>multiply</b> &nbsp;\u00b7&nbsp; "and" = <b>add a separate parcel</b></div>';
+  h+='<ul class="cheat-bul">';
+  h+='<li>Multiply every fraction together, then \u00d7 640.</li>';
+  h+='<li>NW\u00bc of SE\u00bc \u2192 \u00bc \u00d7 \u00bc \u00d7 640 = <b>40 acres</b></li>';
+  h+='<li>S\u00bd of SW\u00bc of NE\u00bc \u2192 \u00bd \u00d7 \u00bc \u00d7 \u00bc \u00d7 640 = <b>20 acres</b></li>';
+  h+='<li>Joined by "and" \u2192 40 + 20 = <b>60 acres</b></li>';
+  h+='</ul>';
+  h+='<div class="cheat-trap">\ud83e\udde0 Direction words (N/S/E/W) don\u2019t affect size \u2014 only the fractions do. Always start from 640.</div></div>';
+
+  // ---- Part 3: Concepts ----
+  h+='<h3 class="cheat-section sans">PART 3 \u00b7 Concepts (clue \u2192 answer)</h3>';
+  h+='<div class="cheat-grid">';
+  concepts.forEach(c=>{
+    h+=`<div class="cheat-card"><div class="cheat-title">${esc(c.t)}</div>`;
+    h+=`<div class="cheat-rule">${esc(c.r).replace(/\n/g,'<br>')}</div>`;
+    h+=`<div class="cheat-trap">\ud83e\udde0 ${esc(c.trap)}</div></div>`;
+  });
+  h+='</div>';
+
+  // ---- Top numbers ----
+  h+='<div class="cheat-golden"><div class="cheat-h sans">\u2b50 Top Numbers to Memorize</div><ul>';
+  topNums.forEach(n=>h+=`<li>${esc(n)}</li>`);
+  h+='</ul></div>';
+
+  h+='</div>';
   return h;
 }
 
@@ -998,6 +1172,7 @@ function render(){
   else if(tab==='mock')html=viewMock();
   else if(tab==='flashcards')html=viewFlashcards();
   else if(tab==='formulas')html=viewFormulas();
+  else if(tab==='cheat')html=viewCheat();
   else if(tab==='tips')html=viewTips();
   $('#view').innerHTML=html;
   wire();
