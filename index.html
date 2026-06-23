@@ -915,10 +915,10 @@ function viewFormulas(){
 function viewCheat(){
   // Math patterns - clue → formula → example → trap warning
   const math=[
-    {title:'1. Seller\u2019s NET → find Sale Price',clue:'"Seller netted $___ after a ___% commission."',
-     f:'Sale Price = Net \u00f7 (1 \u2212 commission rate)',
-     ex:'6% commission \u2192 divide by 0.94 \u2192 $355,000 \u00f7 0.94 = $377,660',
-     trap:'NET \u2192 DIVIDE. Never multiply. The trap answer is always Net \u00d7 1.06.'},
+    {title:'1. Seller\u2019s NET → find Sale Price',clue:'"Seller wants to net $___" or "Seller received $___ after a ___% commission."',
+     f:'Sale Price = Net \u00f7 (1 \u2212 commission rate)\nQuick lookup: 5%\u2192\u00f7.95 \u00b7 6%\u2192\u00f7.94 \u00b7 7%\u2192\u00f7.93 \u00b7 8%\u2192\u00f7.92',
+     ex:'Seller nets $65,000 at 6% \u2192 $65,000 \u00f7 0.94 = $69,149\nSeller nets $355,000 at 6% \u2192 $355,000 \u00f7 0.94 = $377,660',
+     trap:'NET \u2192 DIVIDE. Never multiply. The trap answer is always Net \u00d7 (1 + rate). "Wants to net" / "received after" = same pattern.'},
     {title:'2. Sale Price → find Commission',clue:'"Property sold for $___, commission was ___%"',
      f:'Commission = Sale Price \u00d7 rate',
      ex:'$175,000 \u00d7 0.06 = $10,500',
@@ -1036,6 +1036,12 @@ function viewCheat(){
     {t:'Capital Gains Exclusion (Primary Residence)',
      r:'Single filer: $250,000 excluded from gains on sale of primary residence.\nMarried filing jointly: $500,000.\nMust have owned + lived in the home 2 of the last 5 years.',
      trap:'250 single / 500 married. The 5-year question is the trap (it\u2019s 2 of 5, not 5 straight).'},
+    {t:'Option Contract \u2014 one-sided',
+     r:'\u2713 SELLER (Optionor) is bound \u2014 MUST sell if buyer exercises.\n\u2717 BUYER (Optionee) is NOT bound \u2014 MAY buy, may walk away.\nOptionor = Owner. Optionee = the one with the option.',
+     trap:'OPTION = One-Sided. Trigger words: "option to purchase." Answer is almost always Seller Only is bound.'},
+    {t:'Duties to Clients (OLD CAR) vs Customers (HAM)',
+     r:'CLIENT = OLD CAR (Obedience, Loyalty, Disclosure, Confidentiality, Accounting, Reasonable Care).\nCUSTOMER / non-client = HAM only (Honesty, Accounting, Material facts).',
+     trap:'For a CUSTOMER, eliminate any answer with Loyalty, Confidentiality, or Obedience \u2014 those are client-only duties.'},
   ];
 
   const topNums=[
@@ -1056,16 +1062,27 @@ function viewCheat(){
     '1 Section = 1 Square Mile = <b>640 acres</b>',
     '1 Acre = <b>43,560 sq ft</b>',
     '<b>28%</b> = max for Housing (PITI) \u00b7 <b>36%</b> = max for Total Debt',
-    'Less Down Payment = Higher LTV',
-    'Tenant in Common \u2192 leaves to <b>heirs (will)</b>',
-    'Joint Tenancy \u2192 <b>survivorship</b>',
+    'NET \u2192 DIVIDE \u00b7 Have the price \u2192 MULTIPLY',
+    'Payment \u00f7 Factor = Loan in <b>Thousands</b>',
+    'Client = <b>OLD CAR</b> \u00b7 Customer = <b>HAM</b>',
+    'Option Contract \u2192 <b>SELLER bound</b>, buyer is not',
+    'Tenant in Common \u2192 leaves to heirs (will) \u00b7 Joint Tenancy \u2192 survivorship',
     'Principal Broker = <b>ultimate responsibility</b> for agent mistakes',
     'Capital Gains: <b>$250K single \u00b7 $500K married</b>',
-    'Payment \u00f7 Factor = Loan in <b>Thousands</b>',
-    'NET \u2192 DIVIDE \u00b7 Have the price \u2192 MULTIPLY',
   ];
   top10.forEach(s=>h+='<li>'+s+'</li>');
   h+='</ol></div>';
+
+  // ---- One-line Test-Day Recall (the absolute minimum to memorize) ----
+  h+='<div class="cheat-golden"><div class="cheat-h sans">\u26a1 One-Line Test Day Recall</div><ul style="list-style:none;margin-left:0">';
+  const oneLines=[
+    '<b>Seller Nets?</b> \u2192 <b>DIVIDE</b>',
+    '<b>Option Contract?</b> \u2192 <b>SELLER BOUND</b> (buyer is not)',
+    '<b>Customer / non-client duties?</b> \u2192 <b>HAM</b> (Honesty, Accounting, Material facts)',
+    '<b>Client duties?</b> \u2192 <b>OLD CAR</b> (Obedience, Loyalty, Disclosure, Confidentiality, Accounting, Reasonable care)',
+  ];
+  oneLines.forEach(s=>h+='<li style="padding:4px 0">'+s+'</li>');
+  h+='</ul></div>';
 
   h+='<div class="cheat-golden"><div class="cheat-h sans">\u2b50 The Three Golden Rules</div><ol>';
   h+='<li><b>NET \u2192 DIVIDE</b> by (1 \u2212 rate). Have the price \u2192 MULTIPLY.</li>';
