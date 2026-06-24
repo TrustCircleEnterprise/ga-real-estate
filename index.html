@@ -963,6 +963,14 @@ function viewCheat(){
      f:'Daily tax = Annual \u00f7 360\nSeller owes = Daily \u00d7 days they owned this year',
      ex:'Semi-annual $450 \u2192 annual $900 \u00f7 360 = $2.50/day \u00d7 79 days (Jul 1\u2013Sep 19) = $197.50',
      trap:'Banker\u2019s method = 360 days, 30-day months. Sell semi-annual = double it for annual first.'},
+    {title:'13. Concrete / Cubic Yards \u2014 "12 then 27"',clue:'"How many cubic yards of concrete for a ___ ft \u00d7 ___ ft slab ___ inches deep?"',
+     f:'Step 1: Inches \u00f7 12 = depth in feet\nStep 2: L \u00d7 W \u00d7 D = cubic FEET\nStep 3: cubic feet \u00f7 27 = cubic YARDS',
+     ex:'45\u00d73.25 slab, 5" deep \u2192 5\u00f712 = .4167 \u2192 45\u00d73.25\u00d7.4167 = 60.94 cu ft \u2192 \u00f727 = 2.26 cu yd',
+     trap:'"12 then 27, concrete done." Forgetting to convert inches \u2192 feet first is the trap.'},
+    {title:'14. Seller Net Proceeds (start at price, SUBTRACT)',clue:'"How much does the seller WALK AWAY with?" (different from Pattern 1!)',
+     f:'Sales Price\n\u2212 Commission\n\u2212 Attorney / closing costs\n\u2212 Taxes owed\n\u2212 Mortgage payoff\n\u2212 Purchase Money Mortgage (if seller financing)\n= Seller Net',
+     ex:'$43,040.50 net before PMM \u2212 $10,000 PMM held = $33,040.50 cash to seller',
+     trap:'If the seller FINANCES it, the seller doesn\u2019t GET it. PMM = paper, not cash \u2014 subtract it.'},
   ];
 
   // Land fractions table
@@ -1042,6 +1050,12 @@ function viewCheat(){
     {t:'Duties to Clients (OLD CAR) vs Customers (HAM)',
      r:'CLIENT = OLD CAR (Obedience, Loyalty, Disclosure, Confidentiality, Accounting, Reasonable Care).\nCUSTOMER / non-client = HAM only (Honesty, Accounting, Material facts).',
      trap:'For a CUSTOMER, eliminate any answer with Loyalty, Confidentiality, or Obedience \u2014 those are client-only duties.'},
+    {t:'Purchase Money Mortgage (PMM)',
+     r:'Seller carries the financing \u2014 buyer pays the seller over time instead of a bank.\nPMM = a PROMISE to pay, not cash today.\nIf calculating Seller Net Proceeds: SUBTRACT the PMM (seller didn\u2019t get cash for it).',
+     trap:'PMM = Paper, not cash. If the seller finances it, the seller doesn\u2019t walk away with it.'},
+    {t:'Private Restrictions \u2014 Most Restrictive Wins',
+     r:'When zoning, HOA rules, CC&Rs, deed restrictions, or covenants conflict \u2014 the MORE restrictive rule wins.',
+     trap:'Government says "you CAN" \u00b7 HOA says "you CAN\u2019T" \u2192 CAN\u2019T wins. The strictest applicable rule controls.'},
   ];
 
   const topNums=[
@@ -1083,6 +1097,22 @@ function viewCheat(){
   ];
   oneLines.forEach(s=>h+='<li style="padding:4px 0">'+s+'</li>');
   h+='</ul></div>';
+
+  // ---- Top Exam Traps recap (the "if you see X, think Y" cheat codes) ----
+  h+='<div class="cheat-golden"><div class="cheat-h sans">\ud83d\udd25 Top Exam Traps \u2014 If You See, Think</div><table class="cheat-table">';
+  h+='<thead><tr><th>If You See</th><th>Think</th></tr></thead><tbody>';
+  const traps=[
+    ['Concrete / cubic yards','12 then 27 (in\u00f712 \u2192 then \u00f727)'],
+    ['Seller Net Proceeds','Subtract EVERYTHING the seller pays'],
+    ['Purchase Money Mortgage','Paper, not cash \u2014 subtract it'],
+    ['Private Restrictions / HOA','Most restrictive wins'],
+    ['"Miles square"','Square miles \u00d7 640 (not miles \u00d7 miles)'],
+    ['Fannie Mae ratios','28 front (PITI) / 36 back (all debt)'],
+    ['Option Contract','Seller bound, buyer free'],
+    ['Customer (non-client)','HAM only \u2014 no Loyalty/Confidentiality/Obedience'],
+  ];
+  traps.forEach(r=>h+=`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`);
+  h+='</tbody></table></div>';
 
   h+='<div class="cheat-golden"><div class="cheat-h sans">\u2b50 The Three Golden Rules</div><ol>';
   h+='<li><b>NET \u2192 DIVIDE</b> by (1 \u2212 rate). Have the price \u2192 MULTIPLY.</li>';
@@ -1127,7 +1157,8 @@ function viewCheat(){
   h+='<li>S\u00bd of SW\u00bc of NE\u00bc \u2192 \u00bd \u00d7 \u00bc \u00d7 \u00bc \u00d7 640 = <b>20 acres</b></li>';
   h+='<li>Joined by "and" \u2192 40 + 20 = <b>60 acres</b></li>';
   h+='</ul>';
-  h+='<div class="cheat-trap">\ud83e\udde0 Direction words (N/S/E/W) don\u2019t affect size \u2014 only the fractions do. Always start from 640.</div></div>';
+  h+='<div class="cheat-trap">\ud83e\udde0 Direction words (N/S/E/W) don\u2019t affect size \u2014 only the fractions do. Always start from 640.</div>';
+  h+='<div class="cheat-trap" style="margin-top:8px">\ud83d\udea8 <b>"Miles Square" wording trap:</b> "2 miles square" means <b>2 SQUARE miles</b>, NOT 2\u00d72=4. Formula: square miles \u00d7 640 = acres. Example: 2 \u00d7 640 = 1,280 acres.</div></div>';
 
   // ---- Part 3: Concepts ----
   h+='<h3 class="cheat-section sans">PART 3 \u00b7 Concepts (clue \u2192 answer)</h3>';
