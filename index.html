@@ -1056,6 +1056,39 @@ function viewCheat(){
     {t:'Private Restrictions \u2014 Most Restrictive Wins',
      r:'When zoning, HOA rules, CC&Rs, deed restrictions, or covenants conflict \u2014 the MORE restrictive rule wins.',
      trap:'Government says "you CAN" \u00b7 HOA says "you CAN\u2019T" \u2192 CAN\u2019T wins. The strictest applicable rule controls.'},
+    {t:'ECOA vs Fair Housing vs ADA vs Antitrust',
+     r:'\ud83d\udcb5 ECOA = MONEY/credit (income, qualifications)\n\ud83c\udfe0 Fair Housing = WHO they are (race, religion, familial status, disability)\n\u267f ADA = ACCESS (accommodations, accessibility)\n\ud83d\udcc8 Antitrust = COMPETITION (price fixing, market allocation)',
+     trap:'Read the WHY in the question. Refused for income? \u2192 ECOA. Refused for kids? \u2192 Fair Housing. Refused a ramp? \u2192 ADA. Brokers colluding? \u2192 Antitrust.'},
+    {t:'Mechanic\u2019s Liens \u2014 file suit within 1 YEAR',
+     r:'Unpaid contractor/subcontractor files a lien against the property.\nMust then file SUIT within 1 YEAR or the lien is lost.',
+     trap:'"Owner paid the contractor, so no lien?" WRONG \u2014 an unpaid SUBcontractor can still file. "Lien today, sue tomorrow."'},
+    {t:'Who Signs the Deed (Grantor)',
+     r:'The GRANTOR (seller) signs the deed.\nThe GRANTEE (buyer) does NOT sign.\nWhoever holds title on the deed is who must sign \u2014 not necessarily a spouse.',
+     trap:'"The Giver Signs." Don\u2019t fall for trick answers with both parties or the spouse signing if not on title.'},
+    {t:'GA Recovery Fund \u2014 $1M trigger',
+     r:'If the fund balance drops below $1,000,000, all licensees contribute at next renewal.\nMax per claim = $25,000 \u00b7 lifetime cap per licensee = $75,000.',
+     trap:'Don\u2019t confuse the $1M REFILL trigger with the $25K per-claim limit \u2014 these are different numbers.'},
+    {t:'Assumed Mortgage (settlement entries)',
+     r:'When the buyer ASSUMES the seller\u2019s existing loan:\n\u2192 CREDIT the BUYER (they\u2019re taking on the debt)\n\u2192 DEBIT the SELLER (they\u2019re relieved of the debt)',
+     trap:'"Buyer gets the loan = buyer gets the credit." It\u2019s the opposite of how it feels intuitively.'},
+    {t:'GA Broker License Requirements',
+     r:'\u2713 21 years old\n\u2713 Good moral character\n\u2713 60-hour broker pre-license course\n\u2713 3 YEARS of active salesperson experience',
+     trap:'"21 + Character + 60 + 3." The trap answer says 2 years \u2014 Georgia requires 3.'},
+    {t:'Buyer-Broker Agreements',
+     r:'Must be IN WRITING to be enforceable.\nNo specific form is required by law \u2014 any written agreement works.',
+     trap:'"No writing = no enforcing." But the trap is "must use a specific GREC form" \u2014 that\u2019s false.'},
+    {t:'Prorations \u2014 who owns closing day?',
+     r:'In Georgia, the SELLER owns the day of closing.\nBuyer\u2019s ownership starts the DAY AFTER closing.',
+     trap:'If closing is Aug 22, count buyer\u2019s days starting Aug 23 \u2014 not Aug 22.'},
+    {t:'Dower & Curtesy in Georgia',
+     r:'Georgia has NO dower and NO curtesy.\nA spouse who is NOT on the deed has no automatic claim on the other spouse\u2019s real estate.',
+     trap:'"Dead in Georgia." If a question mentions dower, curtesy, or community property in GA \u2014 it\u2019s a trap. None of those apply.'},
+    {t:'Ministerial Acts vs Agency',
+     r:'\ud83d\udccb MINISTERIAL (allowed without representation): stating FACTS \u2014 price, location, square footage, property facts.\n\ud83e\udd1d AGENCY (creates a relationship): giving ADVICE, negotiating, recommending offer terms.',
+     trap:'"Facts = ministerial, opinions/advice = agency." Saying "the price is $300K" is ministerial; saying "I think $290K is a fair offer" is agency.'},
+    {t:'Executors / Administrators \u2014 license exempt',
+     r:'A court-appointed executor or administrator selling estate property does NOT need a real estate license.\nSame exemption for trustees, attorneys, and certain government employees acting in their official roles.',
+     trap:'"Executor = Exempt." The trap answer says they need a license \u2014 they don\u2019t when acting for the estate.'},
   ];
 
   const topNums=[
@@ -1113,6 +1146,29 @@ function viewCheat(){
   ];
   traps.forEach(r=>h+=`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`);
   h+='</tbody></table></div>';
+
+  // ---- Super Fast Last-Minute Cram (the 15-second pre-walk-in list) ----
+  h+='<div class="cheat-golden"><div class="cheat-h sans">\ud83d\ude80 Super Fast Last-Minute Cram</div><ul style="list-style:none;margin-left:0;columns:2;column-gap:24px">';
+  const cram=[
+    '\ud83d\udcb5 Credit \u2192 ECOA',
+    '\ud83c\udfe0 Classes \u2192 Fair Housing',
+    '\u267f Access \u2192 ADA',
+    '\ud83d\udcc8 Competition \u2192 Antitrust',
+    '\ud83e\uddf1 Lien today, sue tomorrow (1 yr)',
+    '\u270d\ufe0f Grantor signs, Grantee receives',
+    '\ud83d\udcb0 Recovery Fund: $1M trigger',
+    '\ud83c\udfe6 Assumed loan = credit buyer / debit seller',
+    '\ud83c\udfe1 GA Broker: 21 + Character + 60 + 3',
+    '\ud83d\udcdd Buyer-Broker = must be written',
+    '\ud83d\udcc5 Seller owns closing day',
+    '\ud83e\udea6 Dower & Curtesy = Dead in GA',
+    '\ud83d\udccb Facts = ministerial \u00b7 Advice = agency',
+    '\u2696\ufe0f Executor = exempt (no license needed)',
+    '\ud83d\udcdc Title holder signs the deed',
+    '\ud83d\udd11 Client \u2192 OLD CAR \u00b7 Customer \u2192 HAM',
+  ];
+  cram.forEach(s=>h+='<li style="padding:3px 0;break-inside:avoid">'+s+'</li>');
+  h+='</ul></div>';
 
   h+='<div class="cheat-golden"><div class="cheat-h sans">\u2b50 The Three Golden Rules</div><ol>';
   h+='<li><b>NET \u2192 DIVIDE</b> by (1 \u2212 rate). Have the price \u2192 MULTIPLY.</li>';
