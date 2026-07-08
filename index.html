@@ -796,7 +796,7 @@ function updateHeader(){
 }
 
 /* ============================ TABS ============================ */
-const TABS=[['overview','Exam Map'],['plan','Daily Plan'],['review','Review'],['mock','Mock Exam'],['flashcards','Flashcards'],['formulas','Formulas'],['cheat','Cheat Sheet'],['tips','Test Day']];
+const TABS=[['overview','Exam Map'],['plan','Daily Plan'],['review','Review'],['mock','Mock Exam'],['flashcards','Flashcards'],['fcplus','Quiz Deck'],['formulas','Formulas'],['cheat','Cheat Sheet'],['tips','Test Day']];
 function renderTabs(){
   $('#tabs').innerHTML=TABS.map(([id,label])=>{
     let badge='';
@@ -1375,6 +1375,8 @@ function viewMock(){
 
 /* ============================ RENDER + EVENTS ============================ */
 let lastTab=null, lastDay=null;
+function viewFcPlus(){return '<iframe src="flashcards.html" style="width:100%;height:85vh;border:0;border-radius:12px"></iframe>';}
+
 function render(){
   renderTabs();
   let html='';
@@ -1383,6 +1385,7 @@ function render(){
   else if(tab==='review')html=viewReview();
   else if(tab==='mock')html=viewMock();
   else if(tab==='flashcards')html=viewFlashcards();
+  else if(tab==='fcplus')html=viewFcPlus();
   else if(tab==='formulas')html=viewFormulas();
   else if(tab==='cheat')html=viewCheat();
   else if(tab==='tips')html=viewTips();
