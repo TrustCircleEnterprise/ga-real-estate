@@ -695,6 +695,7 @@ function persist(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 
 let tab='overview', day=1, fcTopic='all', fcIdx=0, fcFlip=false;
 let missIdx=0, missShow=false;
+let trapIdx=0, trapAnswered=false, trapOrder=null;
 
 /* ============================ HELPERS ============================ */
 const $=s=>document.querySelector(s);
@@ -796,7 +797,7 @@ function updateHeader(){
 }
 
 /* ============================ TABS ============================ */
-const TABS=[['overview','Exam Map'],['plan','Daily Plan'],['review','Review'],['mock','Mock Exam'],['flashcards','Flashcards'],['fcplus','Quiz Deck'],['formulas','Formulas'],['cheat','Cheat Sheet'],['tips','Test Day']];
+const TABS=[['overview','Exam Map'],['plan','Daily Plan'],['review','Review'],['mock','Mock Exam'],['flashcards','Flashcards'],['formulas','Formulas'],['cheat','Cheat Sheet'],['trap','Trap Trainer'],['tips','Test Day']];
 function renderTabs(){
   $('#tabs').innerHTML=TABS.map(([id,label])=>{
     let badge='';
@@ -1119,6 +1120,39 @@ function viewCheat(){
     {t:'Discount Points \u2192 Lender Yield',
      r:'Each discount point = 1% of the LOAN amount, paid up front.\nPurpose: BUYS DOWN the interest rate \u2014 borrower pays less monthly, lender still gets their target yield.',
      trap:'Points INCREASE lender yield (paid up front to make up for the lower rate). They are NOT just a fee.'},
+    {t:'Broker Compensation \u2014 must flow THROUGH the broker',
+     r:'A salesperson can only accept compensation from THEIR OWN sponsoring broker.\nMoney can originate from any party (buyer, seller, other broker) \u2014 but must go through the broker first.',
+     trap:'"Agent can be paid directly by the buyer/seller" \u2014 WRONG. Broker must be the pass-through.'},
+    {t:'Contract Escape / Contingency clauses',
+     r:'"Subject to inspection," "subject to financing," "subject to appraisal" = contingencies.\nIf a contingency FAILS, the buyer may walk WITHOUT breaching. The contract terminates cleanly.',
+     trap:'A failed contingency is NOT a breach. Seller can\u2019t force performance or keep earnest money.'},
+    {t:'Government Powers ranking (PETE) \u2014 least invasive first',
+     r:'\ud83d\udea6 Police power (zoning) = LEAST invasive (just regulates USE).\n\ud83d\udcb0 Taxation = you keep property but must pay.\n\u2696\ufe0f Eminent domain = government TAKES property (with just compensation).\n\ud83d\udc51 Escheat = state TAKES (no heirs).',
+     trap:'"Most limited restriction" = Police Power. It doesn\u2019t take the property.'},
+    {t:'GA Escrow Waiver',
+     r:'A buyer can waive the lender\u2019s tax/insurance escrow requirement IF the lender allows it.\nSome loan types (FHA, high-LTV) REQUIRE escrow \u2014 no waiver allowed.',
+     trap:'Escrow is not always mandatory \u2014 depends on loan type + LTV.'},
+    {t:'Advertisement Rules',
+     r:'All salesperson advertising MUST include the sponsoring BROKER\u2019S name/firm.\n"For sale by (agent name)" alone violates GREC rules.',
+     trap:'Ads without the brokerage firm name = license violation.'},
+    {t:'Blanket Mortgage \u2014 partial release clause',
+     r:'One loan secured by MULTIPLE parcels (e.g. developer\u2019s subdivision).\nPartial release clause lets individual lots be freed from the lien as they\u2019re sold.',
+     trap:'"Subdivision" + "release lots one by one" \u2192 Blanket Mortgage with partial release.'},
+    {t:'Encroachment vs Easement',
+     r:'\ud83d\udea7 Encroachment = UNAUTHORIZED intrusion (fence, driveway) onto neighbor\u2019s land.\n\ud83d\udd11 Easement = AUTHORIZED right to use another\u2019s land.',
+     trap:'Encroachment is a defect in title (may cloud sale). Easement is a granted right.'},
+    {t:'Deed Types \u2014 strongest to weakest protection',
+     r:'\ud83d\udee1\ufe0f General Warranty Deed \u2192 broadest protection to buyer.\n\ud83e\udd1d Special Warranty \u2192 covers only grantor\u2019s ownership period.\n\ud83d\udcdd Bargain & Sale \u2192 implies ownership, no warranties.\n\ud83d\udd13 Quitclaim \u2192 no promises, transfers whatever interest (if any) grantor has.',
+     trap:'"Best protection for buyer" = General Warranty. "Fixing a title cloud between family" = Quitclaim.'},
+    {t:'Statute of Limitations \u2014 Fraud in GA',
+     r:'Fraud claims in Georgia real estate must generally be filed within 4 YEARS of discovery (some property claims run 7 years total).',
+     trap:'Don\u2019t confuse with the Recovery Fund claim window or the 1-year mechanic\u2019s lien suit deadline.'},
+    {t:'Salesperson Termination \u2014 license return',
+     r:'When a salesperson leaves a brokerage, the BROKER must return the license to GREC promptly.\nSalesperson cannot practice until placed under a new broker.',
+     trap:'License doesn\u2019t travel with the salesperson \u2014 it belongs to the brokerage until reassigned.'},
+    {t:'Fair Housing Complaint \u2014 filing window',
+     r:'A complaint under the federal Fair Housing Act must be filed with HUD within 1 YEAR (365 days) of the discriminatory act.',
+     trap:'Don\u2019t confuse HUD\u2019s 1-year window with private civil suit deadlines (up to 2 years).'},
   ];
 
   const topNums=[
@@ -1259,12 +1293,308 @@ function viewCheat(){
   });
   h+='</div>';
 
+  // ---- Exam Week Playbook (relabeled for both Kaplan and PSI) ----
+  h+='<h3 class="cheat-section sans">PART 4 \u00b7 Exam Week Playbook (2 days out \u2192 exam day)</h3>';
+
+  // Day-2 (fix weaknesses)
+  h+='<div class="cheat-card"><div class="cheat-title">\ud83d\udcc5 2 Days Before Exam \u2014 Fix Weaknesses</div>';
+  h+='<div class="cheat-rule"><b>Goal:</b> Kill the traps that cost easy points. NOT cram day.</div>';
+  h+='<ul class="cheat-bul">';
+  h+='<li><b>1 hr \u2014 Brain Dump Sheet:</b> Agency (Designated vs Dual, Exclusive Agency vs Exclusive Right) \u00b7 Fiduciary duties (OLD CAR) \u00b7 Contract types (Valid/Void/Voidable/Unenforceable/Executory/Executed)</li>';
+  h+='<li><b>1 hr \u2014 Math Sprint:</b> 20 problems, under 2 min each. Commission, Seller Net, Capital Gain, Loan Amount, First-payment interest, Effective Gross Income, Acre Conversion</li>';
+  h+='<li><b>15 min \u2014 Break:</b> Walk. Water. No phone.</li>';
+  h+='<li><b>1.25 hr \u2014 GA Law:</b> BRRETA, Trust Accounts, Escrow, Property Management, Brokerage Relationships, Fair Housing, License Law</li>';
+  h+='<li><b>30 min \u2014 Missed Questions:</b> Open the Review tab. Study MISTAKES, not chapters.</li>';
+  h+='<li><b>1 hr \u2014 Trap Trainer:</b> Run through the Trap Trainer tab.</li>';
+  h+='<li><b>1 hr \u2014 Final 25-question mixed quiz.</b></li>';
+  h+='<li><b>8 PM \u2014 STOP.</b> No more studying. TV. Walk. Sleep.</li>';
+  h+='</ul></div>';
+
+  // Day-1 (confidence)
+  h+='<div class="cheat-card"><div class="cheat-title">\ud83d\udcc5 1 Day Before Exam \u2014 Confidence Day</div>';
+  h+='<div class="cheat-rule"><b>Goal:</b> Trust your prep. This is NOT a study day \u2014 it\u2019s a fine-tune day.</div>';
+  h+='<ul class="cheat-bul">';
+  h+='<li><b>Morning:</b> Keep your normal routine (workout, breakfast). Don\u2019t change anything.</li>';
+  h+='<li><b>11 AM \u2013 12 PM:</b> Read the entire Cheat Sheet. NO new material.</li>';
+  h+='<li><b>12 \u2013 1 PM:</b> Review ONLY previously missed questions (Review tab).</li>';
+  h+='<li><b>1 PM:</b> Lunch.</li>';
+  h+='<li><b>2 \u2013 3 PM:</b> ONE 50-question mock exam (in-app Mock Exam tab). No notes, no interruptions. Goal 85%+. Hit 90%+? STOP \u2014 don\u2019t take another.</li>';
+  h+='<li><b>3 PM:</b> Review missed questions only.</li>';
+  h+='<li><b>4 PM \u2014 Pack exam bag:</b> \u2610 Government ID \u2610 PSI confirmation \u2610 Keys \u2610 Water \u2610 Light snack \u2610 Comfortable clothes \u2610 Veteran docs if needed. Know your driving route.</li>';
+  h+='<li><b>5 PM:</b> Light dinner. Nothing heavy.</li>';
+  h+='<li><b>6 PM:</b> Read ONLY the Top Exam Traps + Super Fast Cram at the top of this sheet.</li>';
+  h+='<li><b>7 PM:</b> Close everything. No YouTube, Reddit, social media.</li>';
+  h+='<li><b>Sleep:</b> 7\u20138 hours.</li>';
+  h+='</ul></div>';
+
+  // Exam day
+  h+='<div class="cheat-card"><div class="cheat-title">\ud83c\udfaf EXAM DAY</div>';
+  h+='<div class="cheat-rule"><b>Wake up normal time. Don\u2019t rush. Eat familiar breakfast with protein.</b> Arrive 30\u201345 min early.</div>';
+  h+='<div class="cheat-rule" style="margin-top:10px"><b>\ud83e\uddbe The 10 PSI Rules \u2014 read before walking in:</b></div>';
+  h+='<ol style="margin-left:20px;color:var(--paper);font-size:14px;line-height:1.9">';
+  const psiRules=[
+    'Read the LAST sentence FIRST. Know what they\u2019re asking.',
+    'Circle mentally: <b>MOST / BEST / PRIMARY / FIRST / EXCEPT / NOT</b>. These words change the answer.',
+    'Don\u2019t change answers unless you KNOW why.',
+    'Math: write the formula FIRST, before plugging in.',
+    'One Brokerage + Two Agents \u2192 <b>DESIGNATED</b> agency.',
+    'One Agent + Two Clients \u2192 <b>DUAL</b> agency.',
+    'Buyer finds property but owner sells it themselves \u2192 <b>EXCLUSIVE AGENCY</b>.',
+    'Broker paid regardless of who sells \u2192 <b>EXCLUSIVE RIGHT</b>.',
+    'First mortgage payment \u2192 <b>mostly INTEREST</b>, small principal.',
+    'Stuck? Eliminate two obviously wrong. Then compare the remaining two to the EXACT wording of the question.',
+  ];
+  psiRules.forEach(r=>h+='<li style="margin-bottom:4px">'+r+'</li>');
+  h+='</ol>';
+  h+='<div class="cheat-rule" style="margin-top:10px"><b>During:</b> If a question takes &gt;90 seconds, MARK IT and move on. Don\u2019t let one question cost you five others.</div>';
+  h+='<div class="cheat-rule"><b>Finish early:</b> Review only Math, Agency, and GA Law questions \u2014 don\u2019t reread everything.</div>';
+  h+='<div class="cheat-trap">\ud83e\udde0 After submit: don\u2019t second-guess. The result reflects your prep. If you pass, celebrate. If not, the score report tells you exactly what to work on.</div></div>';
+
   // ---- Top numbers ----
   h+='<div class="cheat-golden"><div class="cheat-h sans">\u2b50 Top Numbers to Memorize</div><ul>';
   topNums.forEach(n=>h+=`<li>${esc(n)}</li>`);
   h+='</ul></div>';
 
   h+='</div>';
+  return h;
+}
+
+// ==== TRAP TRAINER: curated high-trap questions with per-distractor breakdowns ====
+const TRAPS=[
+ {q:'Broker Alice owns a brokerage. Agent Bob (buyer\u2019s agent) and Agent Carol (seller\u2019s agent) both work for Alice. What type of agency is this?',
+  o:['Dual agency','Designated agency','Sub-agency','Facilitator relationship'],
+  a:1,
+  trap:'Same brokerage, DIFFERENT agents on each side = DESIGNATED. Same AGENT on both sides = dual.',
+  why:['Wrong \u2014 dual agency is ONE agent representing both parties, not two.',
+       'Correct \u2014 same broker, two separate agents = designated agency.',
+       'Wrong \u2014 sub-agency is a legacy concept where another broker\u2019s agent works for the LISTING broker.',
+       'Wrong \u2014 facilitator/transaction broker represents neither party as a client.']},
+
+ {q:'A property is listed with Broker X. If ANYONE (including the owner) sells the property during the term, Broker X earns the commission. This is:',
+  o:['Open listing','Exclusive agency listing','Exclusive right to sell','Net listing'],
+  a:2,
+  trap:'"Paid regardless of who sells" = EXCLUSIVE RIGHT. If owner-sells escapes the fee = Exclusive Agency.',
+  why:['Wrong \u2014 open listings pay only the broker who procures the buyer.',
+       'Wrong \u2014 exclusive AGENCY lets the OWNER sell without paying commission.',
+       'Correct \u2014 exclusive right to sell pays the broker no matter who finds the buyer.',
+       'Wrong \u2014 net listings pay the broker the amount OVER a set price (illegal in many states).']},
+
+ {q:'A buyer wants earnest money held in an interest-bearing account. What must happen?',
+  o:['Broker automatically keeps the interest','Buyer automatically receives the interest','Contract must specify who receives the interest','Interest goes to the state Recovery Fund'],
+  a:2,
+  trap:'Interest defaults to NO ONE \u2014 the CONTRACT decides. Blank contract = no interest-bearing account.',
+  why:['Wrong \u2014 brokers can\u2019t claim trust-account interest by default.',
+       'Wrong \u2014 buyer isn\u2019t automatic either.',
+       'Correct \u2014 the sales contract must explicitly designate the interest recipient.',
+       'Wrong \u2014 the Recovery Fund isn\u2019t funded by trust interest.']},
+
+ {q:'A seller nets $65,000 after a 6% commission. What was the sale price?',
+  o:['$61,100','$68,900','$69,149','$70,000'],
+  a:2,
+  trap:'NET \u2192 DIVIDE by (1 \u2212 rate). 6% \u2192 \u00f7 0.94. Never multiply by 1.06.',
+  why:['Wrong \u2014 that\u2019s $65,000 MINUS 6%, going the wrong direction.',
+       'Wrong \u2014 that\u2019s $65,000 \u00d7 1.06, the classic trap answer.',
+       'Correct \u2014 $65,000 \u00f7 0.94 = $69,149.',
+       'Wrong \u2014 round number distractor.']},
+
+ {q:'On a fully amortized loan, the FIRST monthly payment is:',
+  o:['Mostly principal, small interest','Mostly interest, small principal','Split evenly between P and I','Interest only \u2014 no principal in month 1'],
+  a:1,
+  trap:'Early payments = mostly INTEREST. Late payments = mostly principal. This flips as time passes.',
+  why:['Wrong \u2014 this describes late-term payments, not early ones.',
+       'Correct \u2014 amortization schedules front-load interest.',
+       'Wrong \u2014 payments are never split 50/50 on a normal amortized loan.',
+       'Wrong \u2014 amortized loans always include SOME principal from payment 1.']},
+
+ {q:'A seller receives an offer that says "subject to buyer\u2019s inspection." The buyer\u2019s inspector finds issues; buyer walks. Is this contract enforceable?',
+  o:['Yes \u2014 the seller can force closing','No \u2014 the contract is void from the start','No \u2014 the buyer properly exercised the contingency','Yes \u2014 only if seller offers to fix issues'],
+  a:2,
+  trap:'Contingencies allow WALKAWAY without breach. Contract wasn\u2019t VOID \u2014 it just failed the contingency.',
+  why:['Wrong \u2014 specific performance can\u2019t override a properly-exercised contingency.',
+       'Wrong \u2014 the contract was valid; it just terminated because a condition failed.',
+       'Correct \u2014 exercising a contingency is a lawful escape, not a breach.',
+       'Wrong \u2014 seller has no duty to fix; buyer can walk regardless.']},
+
+ {q:'Which government power represents the MOST LIMITED restriction on private property?',
+  o:['Eminent domain','Police power (zoning)','Taxation','Escheat'],
+  a:1,
+  trap:'"MOST LIMITED restriction" is asking which power is LEAST invasive to ownership. Police power just regulates USE.',
+  why:['Wrong \u2014 eminent domain TAKES the property.',
+       'Correct \u2014 police power (zoning) only regulates HOW you use it, not ownership itself.',
+       'Wrong \u2014 unpaid taxation leads to lien and loss of property.',
+       'Wrong \u2014 escheat transfers ownership entirely to the state.']},
+
+ {q:'Broker Ted\u2019s salesperson embezzles trust funds from a client. Who is ultimately responsible to the client?',
+  o:['Only the salesperson','Only the client\u2019s attorney','The Principal Broker','The state Recovery Fund immediately'],
+  a:2,
+  trap:'"The buck stops with the broker." Principal broker carries ultimate liability for salesperson acts.',
+  why:['Wrong \u2014 salesperson is personally liable too, but not ONLY.',
+       'Wrong \u2014 attorney isn\u2019t automatically involved.',
+       'Correct \u2014 principal broker holds ultimate responsibility for salesperson conduct.',
+       'Wrong \u2014 Recovery Fund is a last resort after judgment + failed collection.']},
+
+ {q:'In Georgia, when must a landlord return a security deposit after lease end?',
+  o:['Within 14 days','Within 30 days','Within 60 days','A reasonable time'],
+  a:1,
+  trap:'GA = 30 DAYS. "Reasonable time" is the trap answer that sounds legally clever.',
+  why:['Wrong \u2014 14 days is common in some other states, not GA.',
+       'Correct \u2014 Georgia law requires return within 30 days.',
+       'Wrong \u2014 60 days is too long.',
+       'Wrong \u2014 statutes trump "reasonable" \u2014 GA has a specific number.']},
+
+ {q:'An appraiser completes all three approaches to value. In reconciliation, the appraiser:',
+  o:['Averages the three values','Adds them and divides by 3','Selects the most reliable approach for THIS property','Uses the highest of the three'],
+  a:2,
+  trap:'RECONCILIATION \u2260 AVERAGE. Appraisers weigh reliability and choose \u2014 not math.',
+  why:['Wrong \u2014 this is the #1 trap answer. Reconciliation is judgment, not math.',
+       'Wrong \u2014 same as A, just rephrased.',
+       'Correct \u2014 reconciliation is choosing the most credible approach for the subject.',
+       'Wrong \u2014 highest doesn\u2019t mean most reliable.']},
+
+ {q:'A branch office in Georgia must be managed by:',
+  o:['Any active salesperson','Any active licensed broker','A designated Community Association Manager','The GREC directly'],
+  a:1,
+  trap:'Branch office = BROKER manager. Not salesperson, even senior ones.',
+  why:['Wrong \u2014 salespeople can\u2019t manage branch offices.',
+       'Correct \u2014 must be a licensed broker.',
+       'Wrong \u2014 CAM is for HOAs/condos, not branch offices.',
+       'Wrong \u2014 GREC regulates but doesn\u2019t manage brokerages.']},
+
+ {q:'Sarah is selling her deceased mother\u2019s house as court-appointed executor. Does she need a Georgia real estate license?',
+  o:['Yes \u2014 all sellers need a license','Yes \u2014 unless she uses a licensed attorney','No \u2014 executors are exempt when acting for the estate','No \u2014 only if the property is under $250K'],
+  a:2,
+  trap:'Executors/administrators are EXEMPT when acting in that role. No price threshold matters.',
+  why:['Wrong \u2014 sellers of their OWN property never need a license.',
+       'Wrong \u2014 attorney involvement is separate from the exemption.',
+       'Correct \u2014 court-appointed fiduciaries are exempt.',
+       'Wrong \u2014 no dollar threshold applies to the exemption.']},
+
+ {q:'Which duty does a licensee owe to a CUSTOMER (non-client)?',
+  o:['Loyalty','Obedience','Confidentiality','Honest dealing and material facts'],
+  a:3,
+  trap:'Customers = HAM (Honesty, Accounting, Material facts). Client-only duties (Loyalty/Confidentiality/Obedience) are traps here.',
+  why:['Wrong \u2014 Loyalty is client-only.',
+       'Wrong \u2014 Obedience is client-only.',
+       'Wrong \u2014 Confidentiality is client-only.',
+       'Correct \u2014 honesty and disclosure of material facts are owed to everyone.']},
+
+ {q:'A buyer assumes the seller\u2019s existing mortgage at closing. On the settlement statement, the assumed loan appears as:',
+  o:['Credit to seller, debit to buyer','Credit to buyer, debit to seller','Credit to both parties','Debit to both parties'],
+  a:1,
+  trap:'Assumed loan = buyer takes on debt (credit) / seller relieved of debt (debit). Feels backwards but is correct.',
+  why:['Wrong \u2014 this is the intuitive-but-wrong answer.',
+       'Correct \u2014 buyer gets credit for taking on the loan; seller gets debit for being relieved.',
+       'Wrong \u2014 impossible; a debt has one holder.',
+       'Wrong \u2014 same reasoning \u2014 one party gets each side.']},
+
+ {q:'A widow inherits her husband\u2019s share of a home he owned in JOINT TENANCY with his brother. Who owns the property now?',
+  o:['The widow (via inheritance)','The brother (by survivorship)','Widow and brother equally','It escheats to Georgia'],
+  a:1,
+  trap:'Joint tenancy has RIGHT OF SURVIVORSHIP \u2014 goes to surviving joint tenant, NOT heirs, NOT the will.',
+  why:['Wrong \u2014 survivorship overrides inheritance in joint tenancy.',
+       'Correct \u2014 the surviving joint tenant (brother) takes full title automatically.',
+       'Wrong \u2014 widow gets NO share because survivorship trumps a will.',
+       'Wrong \u2014 escheat only applies with no heirs and no co-owners.']},
+
+ {q:'Two competing brokerages agree to charge the same commission rate to "keep the market fair." This is:',
+  o:['Legal collaboration','Price fixing (illegal)','Steering','A group boycott'],
+  a:1,
+  trap:'Competitors agreeing on prices = per-se Sherman Antitrust violation. Doesn\u2019t matter WHY.',
+  why:['Wrong \u2014 competitors can\u2019t coordinate rates, ever.',
+       'Correct \u2014 classic price fixing, illegal per se.',
+       'Wrong \u2014 steering is directing based on protected class.',
+       'Wrong \u2014 boycotts are refusing to deal; this is coordinating pricing.']},
+
+ {q:'PSI question: A property has a fair-market value of $200,000. If assessed at 40%, and the tax rate is 30 mills, what is the annual tax?',
+  o:['$800','$2,400','$6,000','$24,000'],
+  a:1,
+  trap:'ASSESSED value \u00d7 mill rate (as a decimal). 30 mills = 0.030, not 30% or 3%.',
+  why:['Wrong \u2014 forgot the 40% assessment step.',
+       'Correct \u2014 $200K \u00d7 0.40 = $80K assessed; \u00d7 0.030 = $2,400.',
+       'Wrong \u2014 used 30% (0.30) instead of 30 mills.',
+       'Wrong \u2014 skipped assessment AND used 30% instead of mills.']},
+
+ {q:'A seller finances $10,000 of the sale as a Purchase Money Mortgage (PMM). At closing, PMM affects seller\u2019s NET PROCEEDS by:',
+  o:['Adding to net (seller keeps a note)','Reducing net (seller didn\u2019t receive cash for it)','No effect (it\u2019s still owed to seller)','Doubling the commission owed'],
+  a:1,
+  trap:'PMM = paper, not cash. The seller doesn\u2019t walk out with money for that portion.',
+  why:['Wrong \u2014 the note doesn\u2019t add cash to what seller nets today.',
+       'Correct \u2014 PMM reduces cash proceeds by the amount financed.',
+       'Wrong \u2014 seller does receive value later, but this question is about closing net.',
+       'Wrong \u2014 commission is unrelated.']},
+
+ {q:'A licensee tells a buyer, "The house is 2,400 square feet." This statement is:',
+  o:['Agency (creates a relationship)','A ministerial act','Puffing','Fraud'],
+  a:1,
+  trap:'Facts = MINISTERIAL. Advice/opinions = agency. Sq ft is a fact.',
+  why:['Wrong \u2014 stating measurable facts doesn\u2019t create agency.',
+       'Correct \u2014 conveying factual information about the property is ministerial.',
+       'Wrong \u2014 puffing is opinion ("best house on the block").',
+       'Wrong \u2014 fraud requires a KNOWN false statement.']},
+
+ {q:'A licensee sees "MOST LIKELY," "PRIMARY," and "BEST" in a question stem. What should they do?',
+  o:['Treat all answers as equally valid','Pick the most technically true answer','Pick the answer that BEST fits the exact wording','Skip the question'],
+  a:2,
+  trap:'These signal words = PSI is asking for the closest fit, not the "not wrong" answer.',
+  why:['Wrong \u2014 modifier words narrow the correct answer.',
+       'Wrong \u2014 multiple answers may be technically true; PSI wants BEST fit.',
+       'Correct \u2014 modifier words tell you to find the tightest match to the stem.',
+       'Wrong \u2014 skipping loses points; work through it.']},
+];
+
+function viewTrap(){
+  if(!trapOrder) trapOrder=TRAPS.map((_,i)=>i);
+  if(trapIdx>=trapOrder.length) trapIdx=0;
+  const t=TRAPS[trapOrder[trapIdx]];
+  const sel=S._trapPick;
+
+  let h='<div class="fade"><h2>Trap Trainer</h2><p class="lead">'+TRAPS.length+' curated high-trap PSI-style questions. See not just why the right answer wins \u2014 but why each wrong answer is engineered to trap you.</p>';
+
+  // progress bar
+  const done=Math.min(trapIdx+(trapAnswered?1:0),TRAPS.length);
+  h+='<div style="margin-bottom:20px"><div class="pbar-label sans"><span>Question '+(trapIdx+1)+' of '+TRAPS.length+'</span><span>'+done+' completed</span></div><div class="pbar"><i style="width:'+(done/TRAPS.length*100)+'%"></i></div></div>';
+
+  // question card
+  h+='<div class="panel"><div style="padding:22px">';
+  h+='<div class="stem" style="font-size:16px;line-height:1.5;margin-bottom:16px">'+esc(t.q)+'</div>';
+  t.o.forEach((op,oi)=>{
+    const isCorrect=oi===t.a, isPicked=sel===oi;
+    let cls='opt';
+    if(trapAnswered){
+      if(isCorrect) cls+=' correct';
+      else if(isPicked) cls+=' wrong';
+    }else if(isPicked){
+      cls+=' sel';
+    }
+    h+=`<button class="${cls}" data-trap-o="${oi}"${trapAnswered?' disabled':''}><span class="ltr">${String.fromCharCode(65+oi)}.</span>${esc(op)}</button>`;
+  });
+
+  if(trapAnswered){
+    h+='<div style="margin-top:18px;padding:14px 16px;background:linear-gradient(135deg,var(--bg3),var(--bg2));border:1px solid var(--gold)">';
+    h+='<div class="cheat-h sans" style="margin-bottom:8px">\ud83e\udde0 The Trap</div>';
+    h+='<div style="font-size:14px;color:var(--paper);line-height:1.5">'+esc(t.trap)+'</div></div>';
+
+    h+='<div style="margin-top:14px"><div class="cheat-h sans" style="margin-bottom:10px">Answer Breakdown</div>';
+    t.o.forEach((op,oi)=>{
+      const isCorrect=oi===t.a;
+      const bg=isCorrect?'rgba(212,165,116,.10)':'rgba(139,58,31,.10)';
+      const bdr=isCorrect?'var(--gold)':'var(--copper)';
+      const mark=isCorrect?'\u2705':'\u274c';
+      h+=`<div style="padding:10px 12px;margin-bottom:6px;background:${bg};border-left:3px solid ${bdr};font-size:13.5px;line-height:1.5"><b>${mark} ${String.fromCharCode(65+oi)}.</b> ${esc(t.why[oi])}</div>`;
+    });
+    h+='</div>';
+
+    // nav
+    h+='<div class="dnav" style="margin-top:18px">';
+    h+='<button class="sans" id="trapPrev"'+(trapIdx===0?' disabled':'')+'>\u2039 Prev</button>';
+    h+='<button class="sans" id="trapShuffle">\ud83d\udd00 Shuffle</button>';
+    h+='<button class="sans next" id="trapNext">'+(trapIdx===TRAPS.length-1?'Restart':'Next Trap \u203a')+'</button>';
+    h+='</div>';
+  }else{
+    h+=`<button class="submit sans" id="trapSubmit"${sel===undefined?' disabled':''} style="margin-top:16px">Submit Answer</button>`;
+  }
+
+  h+='</div></div></div>';
   return h;
 }
 
@@ -1375,8 +1705,6 @@ function viewMock(){
 
 /* ============================ RENDER + EVENTS ============================ */
 let lastTab=null, lastDay=null;
-function viewFcPlus(){return '<iframe src="flashcards.html" style="width:100%;height:85vh;border:0;border-radius:12px"></iframe>';}
-
 function render(){
   renderTabs();
   let html='';
@@ -1385,9 +1713,9 @@ function render(){
   else if(tab==='review')html=viewReview();
   else if(tab==='mock')html=viewMock();
   else if(tab==='flashcards')html=viewFlashcards();
-  else if(tab==='fcplus')html=viewFcPlus();
   else if(tab==='formulas')html=viewFormulas();
   else if(tab==='cheat')html=viewCheat();
+  else if(tab==='trap')html=viewTrap();
   else if(tab==='tips')html=viewTips();
   $('#view').innerHTML=html;
   wire();
@@ -1481,6 +1809,23 @@ function wire(){
     S.mock.correct=c;S.mock.done=true;S.mock.review=undefined;
     S.mock.elapsed=Math.floor((Date.now()-S.mock.start)/1000);
     persist();render();
+  };
+
+  // trap trainer
+  document.querySelectorAll('[data-trap-o]').forEach(b=>b.onclick=()=>{
+    if(trapAnswered)return;
+    S._trapPick=+b.dataset.trapO;persist();render();
+  });
+  const tsub=$('#trapSubmit');if(tsub)tsub.onclick=()=>{trapAnswered=true;render();};
+  const tprev=$('#trapPrev');if(tprev)tprev.onclick=()=>{if(trapIdx>0){trapIdx--;trapAnswered=false;S._trapPick=undefined;persist();render();}};
+  const tnext=$('#trapNext');if(tnext)tnext.onclick=()=>{
+    if(trapIdx>=TRAPS.length-1){trapIdx=0;}else{trapIdx++;}
+    trapAnswered=false;S._trapPick=undefined;persist();render();
+  };
+  const tshuf=$('#trapShuffle');if(tshuf)tshuf.onclick=()=>{
+    trapOrder=TRAPS.map((_,i)=>i);
+    for(let i=trapOrder.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[trapOrder[i],trapOrder[j]]=[trapOrder[j],trapOrder[i]];}
+    trapIdx=0;trapAnswered=false;S._trapPick=undefined;render();
   };
 }
 
